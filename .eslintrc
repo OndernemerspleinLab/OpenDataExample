@@ -4,7 +4,7 @@
   "env": {
     "browser": true,
     "node": true,
-    "jasmine": true,
+    "jest": true,
     "es6": true
   },
   "plugins": ["react", "import", "prettier"],
@@ -78,7 +78,6 @@
     "no-octal-escape": ["error"],
     "no-octal": ["error"],
     "no-param-reassign": ["error", { "props": true }],
-    "no-process-env": ["error"],
     "no-proto": ["error"],
     "no-redeclare": ["error"],
     "no-return-assign": ["error", "always"],
