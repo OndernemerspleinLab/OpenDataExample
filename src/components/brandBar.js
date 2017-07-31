@@ -1,6 +1,11 @@
+// @flow
+
 import React from 'react';
-import logo from '../logo.svg';
+import styled from 'styled-components';
 
-const Header = () => <div className="brandBar" />;
+const BrandBar = styled.div`
+	background-color: #0077c0;
+	height: 70px;
+`;
 
-export default Header;
+export default BrandBar;
