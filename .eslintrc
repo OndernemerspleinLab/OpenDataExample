@@ -7,7 +7,7 @@
     "jest": true,
     "es6": true
   },
-  "plugins": ["react", "import", "prettier"],
+  "plugins": ["react", "import", "prettier", "flowtype"],
   "settings": {
     "import/ignore": ["node_modules"]
   },
@@ -67,10 +67,6 @@
     "no-labels": ["error"],
     "no-lone-blocks": ["error"],
     "no-loop-func": ["error"],
-    "no-magic-numbers": [
-      "error",
-      { "ignore": [0, 1, 2], "enforceConst": true }
-    ],
     "no-native-reassign": ["error"],
     "no-new-func": ["error"],
     "no-new-wrappers": ["error"],
@@ -104,7 +100,7 @@
     "no-shadow-restricted-names": ["error"],
     "no-shadow": ["error"],
     "no-undef-init": ["error"],
-    "no-undef": ["error"],
+    "no-undef": 0,
     "no-undefined": ["off"],
     "no-unused-vars": ["warn"],
     "no-use-before-define": ["warn"],
@@ -121,7 +117,7 @@
       }
     ],
 
-    "react/jsx-no-undef": ["error"],
+    "react/jsx-no-undef": ["off"],
     "react/jsx-uses-react": ["error"],
     "react/jsx-uses-vars": ["error"],
 
@@ -137,8 +133,6 @@
     "react/jsx-pascal-case": ["error"],
     "react/jsx-sort-prop-types": ["off"],
     "react/jsx-sort-props": ["off"],
-    "react/no-danger": ["error"],
-    "react/no-danger-with-children": ["error"],
     "react/no-deprecated": ["error"],
     "react/no-did-mount-set-state": ["error"],
     "react/no-did-update-set-state": ["error"],
