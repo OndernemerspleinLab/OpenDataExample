@@ -24,7 +24,6 @@ export const httpFetch = (
 	options: RequestOptions,
 	queryParams: { [key: string]: any }
 ): PromiseResponse => {
-	console.log(url);
 	const parsedUrl = new URL(url);
 
 	Object.keys(queryParams).map(key => {
