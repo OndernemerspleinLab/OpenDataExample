@@ -10,6 +10,7 @@ export const baseStyles = () => injectGlobal`
 	
 	body {
 		line-height: 1.6;
+		padding-bottom: 100px;
 	}
 `;
 
