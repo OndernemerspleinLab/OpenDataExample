@@ -1,6 +1,6 @@
 // @flow
 
-export type Author = {
+export type AuthorModel = {
 	logo: string,
 	name: string,
 	payoff: string,

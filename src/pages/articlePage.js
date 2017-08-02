@@ -2,40 +2,34 @@
 
 import React, { Component } from 'react';
 import { getArticle } from '../api/apiCalls';
-import type { Article } from '../models/article';
+import { defaultArticle } from '../models/article';
+import Article from '../components/article';
+import type { ArticleModel } from '../models/article';
 
-const addHtmlKey = (htmlString: string): {} => {
-	return { __html: htmlString };
-};
+class ArticlePage extends Component {
+	/* eslint-disable no-undef */
+	state: {
+		article: ArticleModel,
+	};
 
-class ArticlePage extends Component<void, void, State> {
 	constructor() {
 		super();
 
 		this.state = {
-			article: {},
-			articleBody: {},
+			article: defaultArticle(),
 		};
 	}
 
 	componentDidMount() {
-		getArticle(this.props.match.params.id).then((result: Article) => {
-			const articleObject = { article: result, articleBody: {} };
-			articleObject.articleBody = addHtmlKey(result.articleBody);
+		getArticle(this.props.match.params.id).then((result: ArticleModel) => {
+			const articleObject = { article: result };
 
 			this.setState(articleObject);
 		});
 	}
 
 	render() {
-		return (
-			<div>
-				<h1>
-					{this.state.article.headLine}
-				</h1>
-				<div dangerouslySetInnerHTML={this.state.article.articleBody} />
-			</div>
-		);
+		return <Article article={this.state.article} />;
 	}
 }
 

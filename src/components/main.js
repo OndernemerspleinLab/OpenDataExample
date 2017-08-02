@@ -8,14 +8,17 @@ import Container from 'muicss/lib/react/container';
 import Row from 'muicss/lib/react/row';
 import Col from 'muicss/lib/react/col';
 
+export const articleUrl = '/artikel/';
+export const articlesUrl = '/artikelen/';
+
 const Main = () =>
 	<main>
 		<Container>
 			<Row>
 				<Col md="12">
 					<Switch>
-						<Route path="/artikelen" component={OverviewPage} />
-						<Route path="/artikel/:id" component={ArticlePage} />
+						<Route path={`${articlesUrl}:offset?`} component={OverviewPage} />
+						<Route path={`${articleUrl}:id`} component={ArticlePage} />
 					</Switch>
 				</Col>
 			</Row>

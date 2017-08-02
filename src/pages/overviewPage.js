@@ -1,22 +1,55 @@
 // @flow
 
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { getArticles } from '../api/apiCalls';
-import type { Articles } from '../models/articles';
+import React from 'react';
 
-class OverviewPage extends Component<void, void, State> {
+import { getArticles } from '../api/apiCalls';
+import type {
+	ArticlesModel,
+	ArticleReference,
+	PaginationModel,
+} from '../models/articles';
+import { defaultPagination } from '../models/articles';
+import ArticleList from '../components/article-list';
+import Pagination from '../components/pagination';
+
+const articlesPerPage = 20;
+
+class OverviewPage extends React.Component {
+	/* eslint-disable no-undef */
+	state: {
+		articles: ArticleReference[],
+		pagination: PaginationModel,
+	};
+
 	constructor() {
 		super();
-
 		this.state = {
 			articles: [],
+			pagination: defaultPagination,
 		};
 	}
 
+	componentWillReceiveProps(newProps: any) {
+		if (newProps.match.params.offset !== this.props.match.params.offset) {
+			getArticles(
+				newProps.match.params.offset
+			).then((result: ArticlesModel) => {
+				this.setState({
+					articles: result.articles,
+					pagination: result.pagination,
+				});
+			});
+		}
+	}
+
 	componentDidMount() {
-		getArticles().then((result: Articles) => {
-			this.setState({ articles: result.articles });
+		getArticles(
+			this.props.match.params.offset
+		).then((result: ArticlesModel) => {
+			this.setState({
+				articles: result.articles,
+				pagination: result.pagination,
+			});
 		});
 	}
 
@@ -27,15 +60,11 @@ class OverviewPage extends Component<void, void, State> {
 					{'Overview'}
 				</h1>
 
-				{this.state.articles.map((article, key) => {
-					return (
-						<div key={key}>
-							<Link to={`/artikel/${article.identifier}`}>
-								{article.headLine}
-							</Link>
-						</div>
-					);
-				})}
+				<ArticleList articles={this.state.articles} />
+				<Pagination
+					pagination={this.state.pagination}
+					limit={articlesPerPage}
+				/>
 			</div>
 		);
 	}

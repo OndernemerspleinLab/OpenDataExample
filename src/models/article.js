@@ -1,11 +1,13 @@
 // @flow
 
-import type { Author } from './author';
+import type { AuthorModel } from './author';
+import type { ArticleType } from './article-type';
 
-export type Article = {
-	additionalType: string,
+export type ArticleModel = {
+	about: string,
+	additionalType: ArticleType,
 	articleBody: string,
-	author: Author[],
+	author: AuthorModel[],
 	dateCreated: string,
 	dateModified: string,
 	hasPart: string[],
@@ -14,6 +16,25 @@ export type Article = {
 	inLanguage: string,
 	isPartOf: string[],
 	keywords: string[],
-	publisher: Author[],
+	publisher: AuthorModel[],
 	url: string,
+};
+
+export const defaultArticle = (): ArticleModel => {
+	return {
+		about: '',
+		additionalType: '',
+		articleBody: '',
+		author: [],
+		dateCreated: '',
+		dateModified: '',
+		hasPart: [],
+		headLine: '',
+		identifier: '',
+		inLanguage: '',
+		isPartOf: [],
+		keywords: [],
+		publisher: [],
+		url: '',
+	};
 };

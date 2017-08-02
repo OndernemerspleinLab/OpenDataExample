@@ -1,7 +1,6 @@
 // @flow
 
 type PromiseResponse = Promise<Response>;
-type PromiseAny = Promise<any>;
 
 const checkStatus = (response: Response): Response => {
 	if (!response) {
@@ -17,11 +16,24 @@ const checkStatus = (response: Response): Response => {
 	throw error;
 };
 
+const addJsonHeaders = (options = {}) =>
+	Object.assign({ headers: { Accept: 'application/json' }, options });
+
 export const httpFetch = (
 	url: string,
-	options: ?RequestOptions
+	options: RequestOptions,
+	queryParams: { [key: string]: any }
 ): PromiseResponse => {
-	const responsePromise = fetch(url, options).then(checkStatus);
+	console.log(url);
+	const parsedUrl = new URL(url);
+
+	Object.keys(queryParams).map(key => {
+		return parsedUrl.searchParams.append(key, queryParams[key]);
+	});
+
+	const responsePromise = fetch(parsedUrl.href, addJsonHeaders(options)).then(
+		checkStatus
+	);
 	responsePromise.catch(error => {
 		console.log(error);
 	});
@@ -31,5 +43,6 @@ export const httpFetch = (
 
 export const fetchJson = (
 	url: string,
-	options: ?RequestOptions = {}
-): PromiseAny => httpFetch(url, options).then(response => response.json());
+	options: RequestOptions = {},
+	params: { [key: string]: any } = {}
+) => httpFetch(url, options, params).then(response => response.json());
