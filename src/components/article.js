@@ -25,6 +25,18 @@ const Intro = styled.div`
 	margin-bottom: 34px;
 `;
 
+const ArticleLinkBase = ({ url, className, children }) =>
+	<a href={url} className={className} rel="noopener noreferrer">
+		{children}
+	</a>;
+
+const ArticleLink = styled(ArticleLinkBase)`
+	margin-top: 8px;
+	color: #a0a0a0;
+	display: block;
+	float: right;
+`;
+
 const InfoText = (props: { author: AuthorModel }) => {
 	if (!props.author) {
 		return null;
@@ -45,6 +57,9 @@ const Article = (props: Props) => {
 	return (
 		<article>
 			<header>
+				<ArticleLink url={article.url} className="">
+					Bekijk deze pagina op Ondernemersplein.nl
+				</ArticleLink>
 				<ArticleTitle>
 					{article.headLine}
 				</ArticleTitle>

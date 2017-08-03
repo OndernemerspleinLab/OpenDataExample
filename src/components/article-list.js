@@ -20,7 +20,13 @@ const ArticleList = props => {
 		<ArticleWrapper>
 			{articles.map((article, key) => {
 				return (
-					<ArticleLink key={key} to={`${articleUrl}${article.identifier}`}>
+					<ArticleLink
+						key={key}
+						to={{
+							pathname: `${articleUrl}${article.identifier}`,
+							query: { backLink: props.pathname },
+						}}
+					>
 						{article.headLine}
 					</ArticleLink>
 				);

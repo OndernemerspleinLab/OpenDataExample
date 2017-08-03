@@ -11,6 +11,7 @@ import type {
 import { defaultPagination } from '../models/articles';
 import ArticleList from '../components/article-list';
 import Pagination from '../components/pagination';
+import { getObjectPath } from '../helpers/functional';
 
 const articlesPerPage = 20;
 
@@ -60,7 +61,10 @@ class OverviewPage extends React.Component {
 					{'Overview'}
 				</h1>
 
-				<ArticleList articles={this.state.articles} />
+				<ArticleList
+					articles={this.state.articles}
+					pathname={getObjectPath(this.props, ['location', 'pathname'])}
+				/>
 				<Pagination
 					pagination={this.state.pagination}
 					limit={articlesPerPage}
