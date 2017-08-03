@@ -14,6 +14,7 @@ const articlesEndpoint = `${apiBaseUrl}articles/`;
 export const getArticles = (offset: number = 0): PromiseArticles => {
 	const params = {
 		offset: offset,
+		type: ['antwoordpagina-nl'],
 	};
 
 	return fetchJson(articlesEndpoint, {}, params);
