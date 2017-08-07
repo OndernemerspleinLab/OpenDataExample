@@ -150,6 +150,7 @@
     "import/first": ["error"],
     "import/newline-after-import": ["error"],
     "import/named": ["error"],
-    "import/default": ["error"]
+    "import/default": ["error"],
+    "flowtype/define-flow-type": 2
   }
 }

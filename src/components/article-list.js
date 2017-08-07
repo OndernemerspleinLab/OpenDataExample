@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { articleUrl } from './main';
+import { unexisty } from '../helpers/functional';
 
 const ArticleWrapper = styled.div``;
 
@@ -12,7 +13,7 @@ const ArticleLink = styled(Link)`
 const ArticleList = props => {
 	const articles = props.articles;
 
-	if (articles.length <= 0) {
+	if (unexisty(articles)) {
 		return null;
 	}
 

@@ -1,10 +1,13 @@
+// @flow
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { PaginationModel } from '../models/articles';
 import { articlesUrl } from './main';
 import { buttonStyle } from '../styles/index';
+import { PaginationModel } from '../models/pagination';
+import { unexisty } from '../helpers/functional';
 
 const hasPreviousLink = (offset: number): boolean => offset > 0;
 const hasNextLink = (offset: number, limit: number, total: number): boolean =>
@@ -32,20 +35,24 @@ const PaginationLink = styled(Link)`
 const PreviousLink = (props: { offset: number, limit: number }) =>
 	hasPreviousLink(props.offset)
 		? <PaginationLink to={getPreviousUrl(props.offset, props.limit)}>
-				<span>Previous</span>
+				<span>Vorige</span>
 			</PaginationLink>
 		: null;
 
 const NextLink = (props: { offset: number, limit: number, total: number }) =>
 	hasNextLink(props.offset, props.limit, props.total)
 		? <PaginationLink to={getNextUrl(props.offset, props.limit)}>
-				<span>Next</span>
+				<span>Volgende</span>
 			</PaginationLink>
 		: null;
 
-const Pagination = props => {
+const Pagination = (props: { pagination: PaginationModel, limit: number }) => {
 	const pagination: PaginationModel = props.pagination;
-	const limit: number = props.limit;
+	const limit = props.limit;
+
+	if (unexisty(pagination) || unexisty(limit)) {
+		return null;
+	}
 
 	return (
 		<PaginationList>

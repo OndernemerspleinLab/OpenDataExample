@@ -1,13 +1,7 @@
 // @flow
 
 import type { ArticleType } from './article-type';
-
-export type PaginationModel = {
-	limit: number,
-	offset: number,
-	returned: number,
-	total: number,
-};
+import { PaginationModel } from './pagination';
 
 export type ArticleReference = {
 	additionalType: ArticleType,
@@ -19,11 +13,4 @@ export type ArticleReference = {
 export type ArticlesModel = {
 	articles: ArticleReference[],
 	pagination: PaginationModel,
-};
-
-export const defaultPagination: PaginationModel = {
-	limit: 0,
-	offset: 0,
-	returned: 0,
-	total: 0,
 };
