@@ -16,7 +16,7 @@ type PromiseSubsidie = Promise<SubsidieModel>;
 type PromiseSubsidies = Promise<SubsidiesModel>;
 
 const apiOrigin = 'https://opendata.ondernemersplein.nl';
-const apiBaseUrl = `${apiOrigin}/api/`;
+export const apiBaseUrl = `${apiOrigin}/api/`;
 const articlesEndpoint = `${apiBaseUrl}v1/articles/`;
 const eventsEndpoint = `${apiBaseUrl}events/`;
 const subsidiesEndpoint = `${apiBaseUrl}subsidies/`;

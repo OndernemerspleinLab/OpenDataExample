@@ -10,7 +10,7 @@ const TotalString = (props: { children: Element, total: number }) => {
 
 	return (
 		<span>
-			{props.children}: {props.total}
+			{props.children}: <strong>{props.total}</strong>
 		</span>
 	);
 };
