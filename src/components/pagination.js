@@ -1,13 +1,12 @@
 // @flow
 
 import React from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { articlesUrl } from './main';
-import { buttonStyle } from '../styles/index';
 import { PaginationModel } from '../models/pagination';
 import { unexisty } from '../helpers/functional';
+import { InternalButtonLink } from './button-link';
 
 const hasPreviousLink = (offset: number): boolean => offset > 0;
 const hasNextLink = (offset: number, limit: number, total: number): boolean =>
@@ -28,22 +27,19 @@ const PaginationList = styled.div`
 	width: 300px;
 	justify-content: space-between;
 `;
-const PaginationLink = styled(Link)`
-	${buttonStyle}
-`;
 
 const PreviousLink = (props: { offset: number, limit: number }) =>
 	hasPreviousLink(props.offset)
-		? <PaginationLink to={getPreviousUrl(props.offset, props.limit)}>
-				<span>Vorige</span>
-			</PaginationLink>
+		? <InternalButtonLink to={getPreviousUrl(props.offset, props.limit)}>
+				Vorige
+			</InternalButtonLink>
 		: null;
 
 const NextLink = (props: { offset: number, limit: number, total: number }) =>
 	hasNextLink(props.offset, props.limit, props.total)
-		? <PaginationLink to={getNextUrl(props.offset, props.limit)}>
-				<span>Volgende</span>
-			</PaginationLink>
+		? <InternalButtonLink to={getNextUrl(props.offset, props.limit)}>
+				Volgende
+			</InternalButtonLink>
 		: null;
 
 const Pagination = (props: { pagination: PaginationModel, limit: number }) => {
