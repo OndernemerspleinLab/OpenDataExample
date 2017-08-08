@@ -4,6 +4,7 @@ import React from 'react';
 import logo from '../logo.svg';
 import styled from 'styled-components';
 import { Col, Container, Row } from 'muicss/react';
+import { Link } from 'react-router-dom';
 
 const Header = styled.header`
 	display: flex;
@@ -13,7 +14,7 @@ const Header = styled.header`
 	padding: 18px 0 13px;
 `;
 
-const LogoLink = styled.a`
+const LogoLink = styled(Link)`
 	width: 187px;
 	height: 62px;
 	flex: 0 1 auto;
@@ -22,7 +23,7 @@ const LogoLink = styled.a`
 const Img = styled.img``;
 
 const Logo = () =>
-	<LogoLink>
+	<LogoLink to="/">
 		<Img src={logo} alt="logo" />
 	</LogoLink>;
 
