@@ -1,8 +1,9 @@
 // @flow
 
 import styled from 'styled-components';
+import { A } from '../components/link';
 
-const ReferenceLink = styled.a`
+const ReferenceLink = styled(A)`
 	margin: 0 6px;
 	font-size: 1.1rem;
 

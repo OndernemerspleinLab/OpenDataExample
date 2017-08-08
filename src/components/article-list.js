@@ -1,12 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { articleUrl } from './main';
 import { unexisty } from '../helpers/functional';
+import { AnchorLink } from './link';
 
 const ArticleWrapper = styled.div``;
 
-const ArticleLink = styled(Link)`
+const ArticleLink = styled(AnchorLink)`
 	display: block;
 `;
 
