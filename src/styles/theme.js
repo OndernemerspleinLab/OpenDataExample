@@ -6,6 +6,7 @@ export const defaultTheme = {
 	primaryButtonBackground: violet.default,
 	primaryButtonHoverBackground: violet.dark,
 	primaryButtonShadow: violet.dark,
+	primaryButtonHoverShadow: violet.dark,
 };
 
 export const orangeTheme = {
@@ -14,4 +15,5 @@ export const orangeTheme = {
 	primaryButtonBackground: hemelblauw.default,
 	primaryButtonHoverBackground: oranje.default,
 	primaryButtonShadow: hemelblauw.dark,
+	primaryButtonHoverShadow: oranje.text,
 };

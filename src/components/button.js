@@ -15,6 +15,10 @@ export const Button = styled.button`
 		color: #fff;
 	}
 	
+	&:hover {
+		border-color: ${props => props.theme.primaryButtonHoverShadow};
+	}
+	
 	&:before {
 		width: 100%;
 		height: 0;
