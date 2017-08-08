@@ -1,32 +1,22 @@
 import React from 'react';
-import styled from 'styled-components';
-import { buttonStyle } from '../styles/index';
-import { Link } from 'react-router-dom';
+import { Anchor, StyledLink } from './button';
 
-const InternalButtonLinkBase = props => {
+export const InternalButtonLink = props => {
 	return (
-		<Link to={props.to} className={props.className}>
+		<StyledLink to={props.to} className={props.className}>
 			<span>
 				{props.children}
 			</span>
-		</Link>
+		</StyledLink>
 	);
 };
 
-const ExternalButtonLinkBase = props => {
+export const ExternalButtonLink = props => {
 	return (
-		<a href={props.to} className={props.className}>
+		<Anchor href={props.to} className={props.className}>
 			<span>
 				{props.children}
 			</span>
-		</a>
+		</Anchor>
 	);
 };
-
-export const ExternalButtonLink = styled(ExternalButtonLinkBase)`
-	${buttonStyle}
-`;
-
-export const InternalButtonLink = styled(InternalButtonLinkBase)`
-	${buttonStyle}
-`;

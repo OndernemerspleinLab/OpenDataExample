@@ -3,7 +3,7 @@
 import styled from 'styled-components';
 
 const BrandBar = styled.div`
-	background-color: #0077c0;
+	background-color: ${props => props.theme.brandBarBackground};
 	height: 70px;
 `;
 
