@@ -16,7 +16,7 @@ const Main = () =>
 	<main>
 		<Container>
 			<Row>
-				<Col md="12">
+				<Col md="8" md-offset="2">
 					<Switch>
 						<Route path={`${articlesUrl}:offset?`} component={OverviewPage} />
 						<Route path={`${articleUrl}:id`} component={ArticlePage} />
