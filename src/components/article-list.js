@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { articleUrl } from './main';
+import { articleUrl } from '../pages/main';
 import { unexisty } from '../helpers/functional';
 import { AnchorLink } from './link';
 

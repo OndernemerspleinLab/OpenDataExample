@@ -3,7 +3,6 @@ import React from 'react';
 import styled from 'styled-components';
 import type { ArticleModel } from '../models/article';
 import type { AuthorModel } from '../models/author';
-import { ExternalButtonLink } from './button-link';
 
 const addHtmlKey = (htmlString: ?string = ''): {} => {
 	return { __html: htmlString };
@@ -26,11 +25,6 @@ const Intro = styled.div`
 	margin-bottom: 34px;
 `;
 
-const ArticleLink = styled(ExternalButtonLink)`
-	margin-top: 8px;
-	float: right;
-`;
-
 const InfoText = (props: { author: AuthorModel }) => {
 	if (!props.author) {
 		return null;
@@ -51,9 +45,6 @@ const Article = (props: Props) => {
 	return (
 		<article>
 			<header>
-				<ArticleLink to={article.url} className="">
-					Bekijk deze pagina op Ondernemersplein.nl
-				</ArticleLink>
 				<ArticleTitle>
 					{article.headLine}
 				</ArticleTitle>

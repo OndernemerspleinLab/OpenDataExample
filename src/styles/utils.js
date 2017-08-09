@@ -2,6 +2,18 @@
 
 import { css } from 'styled-components';
 
+type Breakpoints =
+	| 'extraSmall'
+	| 'small'
+	| 'smallMedium'
+	| 'medium'
+	| 'mediumLarge'
+	| 'large'
+	| 'extraLarge'
+	| 'extraExtraLarge'
+	| 'extraExtraExtraLarge'
+	| 'largest';
+
 const mediaQueries = {
 	extraSmall: {
 		// 384px
@@ -55,21 +67,25 @@ const mediaQueries = {
 	},
 };
 
-const getMediaQuery = (name, type: 'greater' | 'lesser') =>
-	mediaQueries[name][type];
-const getMqBetween = name =>
-	`@media ${getMediaQuery(name, 'lesser')} and ${getMediaQuery(
-		name,
-		'greater'
-	)}`;
+const getMediaQuery = (name: Breakpoints, type: 'greater' | 'lesser') => {
+	return mediaQueries[name][type];
+};
+
+const getMqBetween = (from: Breakpoints, to: Breakpoints) =>
+	`@media ${getMediaQuery(from, 'lesser')} and ${getMediaQuery(to, 'greater')}`;
 
 export const mq = (
-	name: string,
+	name: { from: Breakpoints, to: Breakpoints } | Breakpoints,
 	type: 'greater' | 'lesser' | 'between' = 'greater'
 ) => (...args: any) => {
-	if (type === 'between') {
-		return css`${getMqBetween(name)} { ${css(...args)}}`;
+	if (typeof name === 'object') {
+		const { from, to } = name;
+		return css`${getMqBetween(from, to)} { ${css(...args)}}`;
 	}
 
-	return css`@media ${getMediaQuery(name, type)} { ${css(...args)}}`;
+	if (typeof name === 'string' && type !== 'between') {
+		return css`@media ${getMediaQuery(name, type)} { ${css(...args)}}`;
+	}
+
+	return null;
 };

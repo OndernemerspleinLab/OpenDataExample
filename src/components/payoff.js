@@ -3,16 +3,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { mq } from '../styles/utils';
-import { calcColumnWidth } from '../styles/grid';
 import { grijs } from '../styles/colors';
 
 const PayoffWrapper = styled.div`
 	padding-left: 0.5rem;
 	flex: 0 0 auto;
-
-	${mq('mediumLarge')`
-		width: ${calcColumnWidth(1 / 3)};
-	`};
 `;
 
 const PayoffText = styled.p`

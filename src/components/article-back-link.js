@@ -8,7 +8,6 @@ const ArticleBackLinkBase = ({ children, backLink, className }) =>
 	</Link>;
 
 const ArticleBackLink = styled(ArticleBackLinkBase)`
-	margin-top: 20px;
 	display: block;
 `;
 

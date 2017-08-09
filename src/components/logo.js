@@ -4,10 +4,8 @@ import React from 'react';
 import styled from 'styled-components';
 import logo from '../logo.svg';
 import { Link } from 'react-router-dom';
-import { column } from '../styles/grid';
 import { mq } from '../styles/utils';
-
-const LogoWrapper = styled.div`${column};`;
+import { Column } from './column';
 
 const LogoLink = styled(Link)`
 	width: fit-content;
@@ -31,8 +29,8 @@ const LogoImg = styled.img`
 `;
 
 export const Logo = () =>
-	<LogoWrapper>
+	<Column>
 		<LogoLink to="/">
 			<LogoImg src={logo} alt="logo" />
 		</LogoLink>
-	</LogoWrapper>;
+	</Column>;

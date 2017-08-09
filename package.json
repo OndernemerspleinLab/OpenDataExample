@@ -4,7 +4,6 @@
   "private": true,
   "homepage": ".",
   "dependencies": {
-    "muicss": "^0.9.20",
     "react": "^15.6.1",
     "react-addons-pure-render-mixin": "^15.6.0",
     "react-dom": "^15.6.1",

@@ -1,12 +1,15 @@
 import { css } from 'styled-components';
 import { mq } from './utils';
 
-const maxWidth = '100rem';
-const space = '2rem';
+export const space = '2rem';
+const maxWidth = '80rem';
 const halfSpace = '1rem';
 
-export const calcColumnWidth = (ratio: number) =>
-	css`calc(${ratio * 100}% - ${space})`;
+export const calcColumnWidth = (ratio: number) => {
+	const percentage = ratio * 100;
+
+	return `calc(${percentage}% - ${space})`;
+};
 
 export const layoutContainer = css`
 	width: 100%;
@@ -35,9 +38,4 @@ export const gridItem = css`
 	display: block;
 	margin-left: ${halfSpace};
 	margin-right: ${halfSpace};
-`;
-
-export const column = css`
-	${gridItem}
-	flex: 0 1 auto;
 `;

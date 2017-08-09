@@ -3,7 +3,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { articlesUrl } from './main';
+import { articlesUrl } from '../pages/main';
 import { PaginationModel } from '../models/pagination';
 import { unexisty } from '../helpers/functional';
 import { InternalButtonLink } from './button-link';
@@ -31,14 +31,14 @@ const PaginationList = styled.div`
 const PreviousLink = (props: { offset: number, limit: number }) =>
 	hasPreviousLink(props.offset)
 		? <InternalButtonLink to={getPreviousUrl(props.offset, props.limit)}>
-				Vorige
+				{'Vorige'}
 			</InternalButtonLink>
 		: null;
 
 const NextLink = (props: { offset: number, limit: number, total: number }) =>
 	hasNextLink(props.offset, props.limit, props.total)
 		? <InternalButtonLink to={getNextUrl(props.offset, props.limit)}>
-				Volgende
+				{'Volgende'}
 			</InternalButtonLink>
 		: null;
 
