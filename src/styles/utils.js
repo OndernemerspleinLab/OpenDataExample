@@ -18,47 +18,47 @@ const mediaQueries = {
 	extraSmall: {
 		// 384px
 		greater: '(min-width: 24em)',
-		lesser: '(max-width: #{24em - (1/16)})',
+		lesser: '(max-width: 23em)',
 	},
 	small: {
 		// 560px
 		greater: '(min-width: 35em)',
-		lesser: '(max-width: #{35em - (1/16)})',
+		lesser: '(max-width: 34em)',
 	},
 	smallMedium: {
 		// 640px
 		greater: '(min-width: 40em)',
-		lesser: '(max-width: #{40em - (1/16)})',
+		lesser: '(max-width: 39em)',
 	},
 	medium: {
 		// 720px
 		greater: '(min-width: 45em)',
-		lesser: '(max-width: #{45em - (1/16)})',
+		lesser: '(max-width: 44em)',
 	},
 	mediumLarge: {
 		// 800px
 		greater: '(min-width: 50em)',
-		lesser: '(max-width: #{50em - (1/16)})',
+		lesser: '(max-width: 49em)',
 	},
 	large: {
 		// 880px
 		greater: '(min-width: 55em)',
-		lesser: '(max-width: #{55em - (1/16)})',
+		lesser: '(max-width: 54em)',
 	},
 	extraLarge: {
 		// 912px
 		greater: '(min-width: 57em)',
-		lesser: '(max-width: #{57em - (1/16)})',
+		lesser: '(max-width: 56em)',
 	},
 	extraExtraLarge: {
 		// 1120px
 		greater: '(min-width: 70em)',
-		lesser: '(max-width: #{70em - (1/16)})',
+		lesser: '(max-width: 69em)',
 	},
 	extraExtraExtraLarge: {
 		// 1296px
 		greater: '(min-width: 81em)',
-		lesser: '(max-width: #{81em - (1/16)})',
+		lesser: '(max-width: 80em)',
 	},
 	largest: {
 		// 1920px

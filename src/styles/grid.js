@@ -2,7 +2,6 @@ import { css } from 'styled-components';
 import { mq } from './utils';
 
 export const space = '2rem';
-const maxWidth = '80rem';
 const halfSpace = '1rem';
 
 export const calcColumnWidth = (ratio: number) => {
@@ -15,7 +14,7 @@ export const layoutContainer = css`
 	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
-	max-width: ${maxWidth};
+	max-width: ${props => props.theme.maxWidth};
 	padding: 0;
 	
 	${mq('extraSmall')`padding: 0 3% 0 0`}

@@ -4,8 +4,6 @@ import Header from './components/header';
 import Main from './pages/main';
 import { ThemeProvider } from 'styled-components';
 import { defaultTheme, orangeTheme } from './styles/theme';
-import { ThemeSwitcher } from './components/theme-switcher';
-import { PreContent } from './components/pre-content';
 
 const Container = styled.div`
 	width: 100%;
@@ -19,6 +17,7 @@ const Page = styled.div`
 	flex-direction: column;
 	padding-top: 1px;
 	margin: -1px auto 0 auto;
+	font-size: ${props => props.theme.fontScale};
 `;
 
 class App extends Component {
@@ -44,10 +43,7 @@ class App extends Component {
 				<Container>
 					<Page>
 						<Header />
-						<PreContent>
-							<ThemeSwitcher switchTheme={this.changeTheme} />
-						</PreContent>
-						<Main />
+						<Main clickHandler={this.changeTheme} />
 					</Page>
 				</Container>
 			</ThemeProvider>

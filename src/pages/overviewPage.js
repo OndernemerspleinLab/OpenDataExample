@@ -15,6 +15,7 @@ import TotalString from '../components/total-string';
 import ReferenceLink from '../components/reference-link';
 import { LayoutContainer } from '../components/layoutContainer';
 import { Column } from '../components/column';
+import { ThemeSwitcher } from '../components/theme-switcher';
 
 const articlesPerPage = 20;
 
@@ -120,6 +121,9 @@ class OverviewPage extends React.Component {
 						pagination={this.state.articles.pagination}
 						limit={articlesPerPage}
 					/>
+				</Column>
+				<Column size="third" sideColumn>
+					<ThemeSwitcher clickHandler={this.props.clickHandler} />
 				</Column>
 			</LayoutContainer>
 		);

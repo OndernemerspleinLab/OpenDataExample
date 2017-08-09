@@ -20,4 +20,5 @@ export const baseStyles = () => injectGlobal`
 		line-height: 1.6;
 		padding-bottom: 100px;
 	}
+	
 `;

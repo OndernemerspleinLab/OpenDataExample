@@ -7,6 +7,7 @@ import OverviewPage from './overviewPage';
 import ArticlePage from './articlePage';
 import { Redirect } from 'react-router';
 import { mq } from '../styles/utils';
+import { RouteWithProps } from '../helpers/route';
 
 export const articleUrl = '/artikel/';
 export const articlesUrl = '/artikelen/';
@@ -18,13 +19,26 @@ const MainBase = styled.main`
 	${mq('large')`margin-top: 2.25`};
 `;
 
-const Main = () =>
-	<MainBase>
-		<Switch>
-			<Route path={`${articlesUrl}:offset?`} component={OverviewPage} />
-			<Route path={`${articleUrl}:id`} component={ArticlePage} />
-			<Route render={() => <Redirect to={articlesUrl} />} />
-		</Switch>
-	</MainBase>;
+class Main extends React.Component {
+	render() {
+		return (
+			<MainBase>
+				<Switch>
+					<RouteWithProps
+						path={`${articlesUrl}:offset?`}
+						component={OverviewPage}
+						clickHandler={this.props.clickHandler}
+					/>
+					<RouteWithProps
+						path={`${articleUrl}:id`}
+						component={ArticlePage}
+						clickHandler={this.props.clickHandler}
+					/>
+					<Route render={() => <Redirect to={articlesUrl} />} />
+				</Switch>
+			</MainBase>
+		);
+	}
+}
 
 export default Main;

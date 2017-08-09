@@ -11,6 +11,7 @@ import { getObjectPath, hasObjectPath } from '../helpers/functional';
 import { LayoutContainer } from '../components/layoutContainer';
 import { Column } from '../components/column';
 import { ArticleLink } from '../components/article-link';
+import { ThemeSwitcher } from '../components/theme-switcher';
 
 const getBackLink = (props): string =>
 	hasObjectPath(props, ['location', 'query', 'backLink'])
@@ -51,6 +52,7 @@ class ArticlePage extends Component {
 					<Article article={this.state.article} />
 				</Column>
 				<Column size="third" sideColumn>
+					<ThemeSwitcher clickHandler={this.props.clickHandler} />
 					<ArticleLink to={this.state.article.url} className="">
 						{'Bekijk deze pagina op Ondernemersplein.nl'}
 					</ArticleLink>

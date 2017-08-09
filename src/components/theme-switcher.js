@@ -1,19 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Button } from './button';
+import { space } from '../styles/grid';
 
-const SwitchWrapper = styled.div`float: right;`;
-const SwitchText = styled.span`font-weight: bold;`;
-const SwitchButton = styled.div`
-	background: ${props => props.theme.alternativeThemeColor};
-	width: 20px;
-	height: 20px;
-	margin-left: 6px;
-	cursor: pointer;
-	float: right;
+const SwitchButton = styled(Button)`
+	display: block;
+	margin-bottom: ${space};
 `;
 
 export const ThemeSwitcher = props =>
-	<SwitchWrapper>
-		<SwitchText>Wijzig kleurenschema:</SwitchText>{' '}
-		<SwitchButton onClick={props.switchTheme} />
-	</SwitchWrapper>;
+	<SwitchButton onClick={props.clickHandler} primary>
+		<span>Wijzig stijl</span>
+	</SwitchButton>;
