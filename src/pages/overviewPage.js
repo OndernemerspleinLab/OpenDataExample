@@ -2,9 +2,12 @@ import React from 'react';
 
 import {
 	apiBaseUrl,
+	articlesEndpoint,
+	eventsEndpoint,
 	getArticles,
 	getEvents,
 	getSubsidies,
+	subsidiesEndpoint,
 } from '../api/apiCalls';
 import ArticleList from '../components/article-list';
 import Pagination from '../components/pagination';
@@ -74,9 +77,7 @@ class OverviewPage extends React.Component {
 						<ReferenceLink href="https://www.ondernemersplein.nl/">
 							(Bekijk op ondernemersplein.nl)
 						</ReferenceLink>
-						<ReferenceLink
-							href={`${apiBaseUrl}help/#!/Articles/ApiV1ArticlesGet`}
-						>
+						<ReferenceLink href={`${articlesEndpoint}?type=antwoordpagina-nl`}>
 							(API Endpoint)
 						</ReferenceLink>
 					</li>
@@ -87,9 +88,7 @@ class OverviewPage extends React.Component {
 						<ReferenceLink href="https://www.ondernemersplein.nl/evenementen/">
 							(Bekijk op ondernemersplein.nl)
 						</ReferenceLink>
-						<ReferenceLink href={`${apiBaseUrl}help/#!/Events/ApiEventsGet`}>
-							(API Endpoint)
-						</ReferenceLink>
+						<ReferenceLink href={eventsEndpoint}>(API Endpoint)</ReferenceLink>
 					</li>
 					<li>
 						<TotalString total={getTotal(this.state.subsidies)}>
@@ -98,9 +97,7 @@ class OverviewPage extends React.Component {
 						<ReferenceLink href="https://www.ondernemersplein.nl/ondernemen/geldzaken/subsidies/">
 							(Bekijk op ondernemersplein.nl)
 						</ReferenceLink>
-						<ReferenceLink
-							href={`${apiBaseUrl}help/#!/Subsidies/ApiSubsidiesGet`}
-						>
+						<ReferenceLink href={subsidiesEndpoint}>
 							(API Endpoint)
 						</ReferenceLink>
 					</li>
