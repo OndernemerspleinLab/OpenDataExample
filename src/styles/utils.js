@@ -57,8 +57,6 @@ const mediaQueries = {
 
 const getMediaQuery = (name, type: 'greater' | 'lesser') =>
 	mediaQueries[name][type];
-const getMqGreater = name => `@media ${getMediaQuery(name, 'greater')}`;
-const getMqLesser = name => `@media ${getMediaQuery(name, 'lesser')}`;
 const getMqBetween = name =>
 	`@media ${getMediaQuery(name, 'lesser')} and ${getMediaQuery(
 		name,
@@ -73,41 +71,5 @@ export const mq = (
 		return css`${getMqBetween(name)} { ${css(...args)}}`;
 	}
 
-	console.log(css(...args));
-	console.log(css`@media ${getMediaQuery(name, type)} { ${css(...args)}}`);
-
 	return css`@media ${getMediaQuery(name, type)} { ${css(...args)}}`;
 };
-
-// export const mq = {
-// 	extraSmall: (...args: any) => css`
-// 		${getMqGreater('extraSmall')} { ${css(...args)} }
-// 	`,
-// 	small: (...args: any) => css`
-// 		${getMqGreater('small')} { ${css(...args)} }
-// 	`,
-// 	smallMedium: (...args: any) => css`
-// 		${getMqGreater('smallMedium')} { ${css(...args)} }
-// 	`,
-// 	medium: (...args: any) => css`
-// 		${getMqGreater('medium')} { ${css(...args)} }
-// 	`,
-// 	mediumLarge: (...args: any) => css`
-// 		${getMqGreater('mediumLarge')} { ${css(...args)} }
-// 	`,
-// 	large: (...args: any) => css`
-// 		${getMqGreater('large')} { ${css(...args)} }
-// 	`,
-// 	extraLarge: (...args: any) => css`
-// 		${getMqGreater('extraLarge')} { ${css(...args)} }
-// 	`,
-// 	extraExtraLarge: (...args: any) => css`
-// 		${getMqGreater('extraExtraLarge')} { ${css(...args)} }
-// 	`,
-// 	extraExtraExtraLarge: (...args: any) => css`
-// 		${getMqGreater('extraExtraExtraLarge')} { ${css(...args)} }
-// 	`,
-// 	largest: (...args: any) => css`
-// 		${getMqGreater('largest')} { ${css(...args)} }
-// 	`,
-// };

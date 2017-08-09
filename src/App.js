@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Header from './components/header';
 import Main from './components/main';
-import BrandBar from './components/brandBar';
 import { ThemeProvider } from 'styled-components';
 import { defaultTheme, orangeTheme } from './styles/theme';
 import { ThemeSwitcher } from './components/theme-switcher';
