@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import { articleUrl } from '../pages/main';
 import { unexisty } from '../helpers/functional';
 import { AnchorLink } from './link';
+import Pagination from './pagination';
+
+const articlesPerPage = 20;
 
 const ArticleWrapper = styled.div``;
 
@@ -32,6 +35,7 @@ const ArticleList = props => {
 					</ArticleLink>
 				);
 			})}
+			<Pagination pagination={articles.pagination} limit={articlesPerPage} />
 		</ArticleWrapper>
 	);
 };

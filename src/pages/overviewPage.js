@@ -9,15 +9,13 @@ import {
 	subsidiesEndpoint,
 } from '../api/apiCalls';
 import ArticleList from '../components/article-list';
-import Pagination from '../components/pagination';
 import { getObjectPath } from '../helpers/functional';
 import TotalString from '../components/total-string';
 import ReferenceLink from '../components/reference-link';
 import { LayoutContainer } from '../components/layoutContainer';
 import { Column } from '../components/column';
 import { ThemeSwitcher } from '../components/theme-switcher';
-
-const articlesPerPage = 20;
+import { SectionLoading } from '../components/section-loading';
 
 const getTotal = statePart => getObjectPath(statePart, ['pagination', 'total']);
 
@@ -28,14 +26,22 @@ class OverviewPage extends React.Component {
 			articles: {},
 			events: {},
 			subsidies: {},
+			loading: true,
 		};
 	}
 
 	componentWillReceiveProps(newProps: any) {
 		if (newProps.match.params.offset !== this.props.match.params.offset) {
+			this.setState({
+				...this.state,
+				loading: true,
+			});
+
 			getArticles(newProps.match.params.offset).then(result => {
 				this.setState({
+					...this.state,
 					articles: result,
+					loading: false,
 				});
 			});
 		}
@@ -51,6 +57,7 @@ class OverviewPage extends React.Component {
 				articles: result[0],
 				events: result[1],
 				subsidies: result[2],
+				loading: false,
 			});
 		});
 	}
@@ -113,14 +120,12 @@ class OverviewPage extends React.Component {
 					<p>
 						{'Klik op een antwoordpagina om de inhoud van de API te bekijken.'}
 					</p>
-					<ArticleList
-						articles={this.state.articles.articles}
-						pathname={getObjectPath(this.props, ['location', 'pathname'])}
-					/>
-					<Pagination
-						pagination={this.state.articles.pagination}
-						limit={articlesPerPage}
-					/>
+					{this.state.loading
+						? <SectionLoading />
+						: <ArticleList
+								articles={this.state.articles.articles}
+								pathname={getObjectPath(this.props, ['location', 'pathname'])}
+							/>}
 				</Column>
 				<Column size="third" sideColumn>
 					<ThemeSwitcher clickHandler={this.props.clickHandler} />
