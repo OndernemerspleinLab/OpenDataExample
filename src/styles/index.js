@@ -21,4 +21,19 @@ export const baseStyles = () => injectGlobal`
 		padding-bottom: 100px;
 	}
 	
+	h1, h2, h3 {
+		line-height: 1.1;
+	}
+	
+	h2 {
+		margin-top: 2em;
+		margin-bottom: 0.4em;
+		font-size: 1.5rem;
+	}
+	
+	h3 {
+		margin-top: 2em;
+		font-size: 1.1rem;
+	}
+	
 `;

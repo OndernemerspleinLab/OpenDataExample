@@ -19,11 +19,12 @@ const Author = styled.p`
 	margin-bottom: 10px;
 	color: dimgray;
 	font-style: italic;
+	font-size: 0.875rem;
 `;
 
 const Intro = styled.div`
 	font-size: 1.2rem;
-	margin-bottom: 2.2rem;
+	margin-bottom: 1.2rem;
 	color: ${hemelblauw.darkest};
 	font-style: italic;
 `;
