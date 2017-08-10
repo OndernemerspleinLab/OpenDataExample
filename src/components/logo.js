@@ -14,17 +14,19 @@ const LogoLink = styled(Link)`
 `;
 
 const LogoImg = styled(LogoIcon)`
-	width: auto;
 	max-width: 100%;
 	display: block;
 
+	width: 7.8rem;
 	height: 2.6rem;
 
 	${mq('small')`
+		width: 9rem;
 		height: 3rem;
 	`};
 
 	${mq('large')`
+		width: 9.36rem;
 		height: 3.12rem;
 	`};
 `;
