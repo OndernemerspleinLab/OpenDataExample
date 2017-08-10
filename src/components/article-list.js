@@ -14,7 +14,7 @@ const ArticleLink = styled(AnchorLink)`
 `;
 
 const ArticleList = props => {
-	const articles = props.articles;
+	const { articles, pagination } = props.articles;
 
 	if (unexisty(articles)) {
 		return null;
@@ -35,7 +35,7 @@ const ArticleList = props => {
 					</ArticleLink>
 				);
 			})}
-			<Pagination pagination={articles.pagination} limit={articlesPerPage} />
+			<Pagination pagination={pagination} limit={articlesPerPage} />
 		</ArticleWrapper>
 	);
 };

@@ -123,7 +123,7 @@ class OverviewPage extends React.Component {
 					{this.state.loading
 						? <SectionLoading />
 						: <ArticleList
-								articles={this.state.articles.articles}
+								articles={this.state.articles}
 								pathname={getObjectPath(this.props, ['location', 'pathname'])}
 							/>}
 				</Column>
