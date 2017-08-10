@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import type { ArticleModel } from '../models/article';
 import type { AuthorModel } from '../models/author';
+import { hemelblauw } from '../styles/colors';
 
 const addHtmlKey = (htmlString: ?string = ''): {} => {
 	return { __html: htmlString };
@@ -21,8 +22,10 @@ const Author = styled.p`
 `;
 
 const Intro = styled.div`
-	font-size: 18px;
-	margin-bottom: 34px;
+	font-size: 1.2rem;
+	margin-bottom: 2.2rem;
+	color: ${hemelblauw.darkest};
+	font-style: italic;
 `;
 
 const InfoText = (props: { author: AuthorModel }) => {

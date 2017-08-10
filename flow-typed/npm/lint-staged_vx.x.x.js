@@ -14,7 +14,7 @@
  */
 
 declare module 'lint-staged' {
-	declare module.exports: any;
+  declare module.exports: any;
 }
 
 /**
@@ -23,51 +23,51 @@ declare module 'lint-staged' {
  * needed.
  */
 declare module 'lint-staged/src/calcChunkSize' {
-	declare module.exports: any;
+  declare module.exports: any;
 }
 
 declare module 'lint-staged/src/findBin' {
-	declare module.exports: any;
+  declare module.exports: any;
 }
 
 declare module 'lint-staged/src/generateTasks' {
-	declare module.exports: any;
+  declare module.exports: any;
 }
 
 declare module 'lint-staged/src/index' {
-	declare module.exports: any;
+  declare module.exports: any;
 }
 
 declare module 'lint-staged/src/readConfigOption' {
-	declare module.exports: any;
+  declare module.exports: any;
 }
 
 declare module 'lint-staged/src/runScript' {
-	declare module.exports: any;
+  declare module.exports: any;
 }
 
 // Filename aliases
 declare module 'lint-staged/index' {
-	declare module.exports: $Exports<'lint-staged'>;
+  declare module.exports: $Exports<'lint-staged'>;
 }
 declare module 'lint-staged/index.js' {
-	declare module.exports: $Exports<'lint-staged'>;
+  declare module.exports: $Exports<'lint-staged'>;
 }
 declare module 'lint-staged/src/calcChunkSize.js' {
-	declare module.exports: $Exports<'lint-staged/src/calcChunkSize'>;
+  declare module.exports: $Exports<'lint-staged/src/calcChunkSize'>;
 }
 declare module 'lint-staged/src/findBin.js' {
-	declare module.exports: $Exports<'lint-staged/src/findBin'>;
+  declare module.exports: $Exports<'lint-staged/src/findBin'>;
 }
 declare module 'lint-staged/src/generateTasks.js' {
-	declare module.exports: $Exports<'lint-staged/src/generateTasks'>;
+  declare module.exports: $Exports<'lint-staged/src/generateTasks'>;
 }
 declare module 'lint-staged/src/index.js' {
-	declare module.exports: $Exports<'lint-staged/src/index'>;
+  declare module.exports: $Exports<'lint-staged/src/index'>;
 }
 declare module 'lint-staged/src/readConfigOption.js' {
-	declare module.exports: $Exports<'lint-staged/src/readConfigOption'>;
+  declare module.exports: $Exports<'lint-staged/src/readConfigOption'>;
 }
 declare module 'lint-staged/src/runScript.js' {
-	declare module.exports: $Exports<'lint-staged/src/runScript'>;
+  declare module.exports: $Exports<'lint-staged/src/runScript'>;
 }

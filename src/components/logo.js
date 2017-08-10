@@ -6,13 +6,14 @@ import logo from '../logo.svg';
 import { Link } from 'react-router-dom';
 import { mq } from '../styles/utils';
 import { Column } from './column';
+import { LogoIcon } from './svg/logo';
 
 const LogoLink = styled(Link)`
 	width: fit-content;
 	display: block;
 `;
 
-const LogoImg = styled.img`
+const LogoImg = styled(LogoIcon)`
 	width: auto;
 	max-width: 100%;
 	display: block;
@@ -31,6 +32,6 @@ const LogoImg = styled.img`
 export const Logo = () =>
 	<Column>
 		<LogoLink to="/">
-			<LogoImg src={logo} alt="logo" />
+			<LogoImg alt="logo" />
 		</LogoLink>
 	</Column>;
