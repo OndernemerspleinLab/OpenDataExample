@@ -12,6 +12,7 @@ import { LayoutContainer } from '../components/layoutContainer';
 import { Column } from '../components/column';
 import { ArticleLink } from '../components/article-link';
 import { ThemeSwitcher } from '../components/theme-switcher';
+import { SectionLoading } from '../components/section-loading';
 
 const getBackLink = (props): string =>
 	hasObjectPath(props, ['location', 'query', 'backLink'])
@@ -22,6 +23,7 @@ class ArticlePage extends Component {
 	/* eslint-disable no-undef */
 	state: {
 		article: ArticleModel,
+		loading: boolean,
 	};
 
 	constructor() {
@@ -29,6 +31,7 @@ class ArticlePage extends Component {
 
 		this.state = {
 			article: defaultArticle(),
+			loading: true,
 		};
 	}
 
@@ -36,6 +39,7 @@ class ArticlePage extends Component {
 		getArticle(this.props.match.params.id).then((result: ArticleModel) => {
 			const stateObject = {
 				article: result,
+				loading: false,
 			};
 
 			this.setState(stateObject);
@@ -49,7 +53,9 @@ class ArticlePage extends Component {
 					<ArticleBackLink backLink={getBackLink(this.props)}>
 						{'Terug naar overzicht'}
 					</ArticleBackLink>
-					<Article article={this.state.article} />
+					{this.state.loading
+						? <SectionLoading />
+						: <Article article={this.state.article} />}
 				</Column>
 				<Column size="third" sideColumn>
 					<ThemeSwitcher clickHandler={this.props.clickHandler} />
