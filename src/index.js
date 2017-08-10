@@ -5,6 +5,10 @@ import App from './App';
 import { baseStyles } from './styles/index';
 import './index.css';
 
+Array.from(document.getElementsByClassName('removeOnLoad')).forEach(element =>
+	element.parentNode.removeChild(element)
+);
+
 const render = () => {
 	baseStyles();
 
