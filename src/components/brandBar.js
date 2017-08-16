@@ -2,9 +2,10 @@
 
 import styled from 'styled-components';
 import { mq } from '../styles/utils';
+import { themeVariable } from '../helpers/styled-component-helpers';
 
 const BrandBar = styled.div`
-	background: ${props => props.theme.brandBarBackground};
+	background: ${themeVariable('brandBarBackground')};
 	display: flex;
 	align-items: center;
 	min-height: 1.875rem;

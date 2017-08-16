@@ -13,6 +13,7 @@ import { Column } from '../components/column';
 import { ArticleLink } from '../components/article-link';
 import { ThemeSwitcher } from '../components/theme-switcher';
 import { SectionLoading } from '../components/section-loading';
+import { AsideLinkLists } from '../components/aside-linklists';
 
 const getBackLink = (props): string =>
 	hasObjectPath(props, ['location', 'query', 'backLink'])
@@ -47,6 +48,17 @@ class ArticlePage extends Component {
 	}
 
 	render() {
+		const linkLists = [
+			{
+				text: 'test 1',
+				links: [{ text: 'test' }, { text: 'test' }, { text: 'test' }],
+			},
+			{
+				text: 'test 2',
+				links: [{ text: 'test' }, { text: 'test' }, { text: 'test' }],
+			},
+		];
+
 		return (
 			<LayoutContainer>
 				<Column size="twoThird">
@@ -58,6 +70,7 @@ class ArticlePage extends Component {
 						: <Article article={this.state.article} />}
 				</Column>
 				<Column size="third" sideColumn>
+					<AsideLinkLists linkLists={linkLists} />
 					<ThemeSwitcher clickHandler={this.props.clickHandler} />
 					<ArticleLink to={this.state.article.url} className="">
 						{'Bekijk deze pagina op Ondernemersplein.nl'}
