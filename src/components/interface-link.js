@@ -2,10 +2,10 @@
 
 import React from 'react';
 import styled from 'styled-components';
-import { A } from './link';
 import { Svg } from './svg/svg';
+import { AnchorLink } from './link';
 
-const InterfaceLinkBase = styled(A)``;
+const InterfaceLinkBase = styled(AnchorLink)``;
 
 const InterfaceLinkText = styled.span`
 	flex: 1 1 auto;
@@ -23,9 +23,10 @@ const InterfaceLinkIcon = styled(Svg)`
 export const InterfaceLink = (props: {
 	children?: Element | string,
 	icon: string,
+	url: string,
 }) => {
 	return (
-		<InterfaceLinkBase>
+		<InterfaceLinkBase to={props.url}>
 			<InterfaceLinkIcon icon={props.icon} />
 			<InterfaceLinkText>
 				{props.children}

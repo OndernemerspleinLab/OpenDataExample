@@ -8,6 +8,10 @@ export const isObject = obj => existy(obj) && typeof obj === 'object';
 
 export const isArray = array => existy(array) && Array.isArray(array);
 
+export const isFilledArray = array => isArray(array) && array.length > 0;
+
+export const isEmptyArray = negate(isFilledArray);
+
 export const isNotObject = negate(isObject);
 
 export const hasObjectPath = (object: Object, path: Array): boolean => {

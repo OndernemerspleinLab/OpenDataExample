@@ -35,7 +35,10 @@ export const LinkList = (props: { links: [], defaultIcon?: string }) => {
 		<BaseLinkList>
 			{props.links.map((link, key) =>
 				<ListItem key={key}>
-					<ListLink icon={link.icon ? link.icon : props.defaultIcon}>
+					<ListLink
+						icon={link.icon ? link.icon : props.defaultIcon}
+						url={link.url}
+					>
 						{link.text}
 					</ListLink>
 				</ListItem>

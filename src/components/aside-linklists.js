@@ -4,7 +4,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { themeVariable } from '../helpers/styled-component-helpers';
 import { LinkList } from './link-list';
-import { existy, unexisty } from '../helpers/functional';
+import { existy, isEmptyArray, unexisty } from '../helpers/functional';
 
 const AsideBlock = styled.div`
 	border-top: 3px solid ${themeVariable('primaryColor')};
@@ -19,24 +19,34 @@ const AsideHeader = styled.h3`
 	fill: #333;
 `;
 
-export const AsideLinkLists = (props: { linkLists: [], icon?: string }) => {
+export const AsideLinkLists = (props: { linkLists: {}, icon?: string }) => {
 	if (unexisty(props.linkLists)) {
 		return null;
 	}
 
+	const listKeys = Object.keys(props.linkLists);
+
 	return (
 		<div>
-			{props.linkLists.map((linkList, key) =>
-				<AsideBlock key={key}>
-					<AsideHeader>
-						{linkList.text}
-					</AsideHeader>
-					<LinkList
-						links={linkList.links}
-						defaultIcon={existy(props.icon) ? props.icon : 'chevron-right'}
-					/>
-				</AsideBlock>
-			)}
+			{listKeys.map((item, key) => {
+				const linkList = props.linkLists[item];
+
+				if (isEmptyArray(linkList.links)) {
+					return null;
+				}
+
+				return (
+					<AsideBlock key={key}>
+						<AsideHeader>
+							{linkList.text}
+						</AsideHeader>
+						<LinkList
+							links={linkList.links}
+							defaultIcon={existy(props.icon) ? props.icon : 'chevron-right'}
+						/>
+					</AsideBlock>
+				);
+			})}
 		</div>
 	);
 };
