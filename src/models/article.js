@@ -2,6 +2,7 @@
 
 import type { AuthorModel } from './author';
 import type { ArticleType } from './article-type';
+import type { ArticlePart } from './articlePart';
 
 export type ArticleModel = {
 	about: string,
@@ -10,7 +11,7 @@ export type ArticleModel = {
 	author: AuthorModel[],
 	dateCreated: string,
 	dateModified: string,
-	hasPart: string[],
+	hasPart: ArticlePart[],
 	headLine: string,
 	identifier: string,
 	inLanguage: string,

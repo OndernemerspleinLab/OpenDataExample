@@ -3,6 +3,7 @@ import { grijs, hemelblauw, oranje, violet } from './colors';
 export const defaultTheme = {
 	maxWidth: '80rem',
 	fontScale: '1em',
+	primaryColor: hemelblauw.default,
 	brandBarBackground: hemelblauw.default,
 
 	primaryButtonBackground: violet.default,
@@ -15,13 +16,14 @@ export const defaultTheme = {
 	secondaryButtonShadow: hemelblauw.dark,
 	secondaryButtonHoverShadow: hemelblauw.dark,
 
-	linkColor: hemelblauw.default,
-	linkColorHover: hemelblauw.dark,
+	linkColor: hemelblauw.grijscontrast,
+	linkColorHover: hemelblauw.grijscontrast,
 };
 
 export const orangeTheme = {
 	maxWidth: '60rem',
 	fontScale: '0.85em',
+	primaryColor: oranje.default,
 	brandBarBackground: oranje.default,
 
 	primaryButtonBackground: hemelblauw.default,

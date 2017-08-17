@@ -8,13 +8,22 @@ export const isObject = obj => existy(obj) && typeof obj === 'object';
 
 export const isArray = array => existy(array) && Array.isArray(array);
 
+export const isFilledArray = array => isArray(array) && array.length > 0;
+
+export const isEmptyArray = negate(isFilledArray);
+
+export const isFilledObject = object =>
+	isObject(object) && Object.keys(object).length > 0;
+
+export const isEmptyObject = negate(isFilledObject);
+
 export const isNotObject = negate(isObject);
 
 export const hasObjectPath = (object: Object, path: Array): boolean => {
 	let testObject = object;
 
 	return path.every(key => {
-		if (isNotObject(testObject) || !(key in testObject)) {
+		if (isEmptyObject(testObject) || !(key in testObject)) {
 			return false;
 		}
 

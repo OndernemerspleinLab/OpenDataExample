@@ -1,29 +1,73 @@
 // @flow
 
-import React, { Component } from 'react';
+import React from 'react';
 import { getArticle } from '../api/apiCalls';
 import { defaultArticle } from '../models/article';
 import Article from '../components/article';
 import ArticleBackLink from '../components/article-back-link';
-import type { ArticleModel } from '../models/article';
-import { articlesUrl } from './main';
+import { articlesUrl, articleUrl } from './main';
 import { getObjectPath, hasObjectPath } from '../helpers/functional';
 import { LayoutContainer } from '../components/layoutContainer';
 import { Column } from '../components/column';
 import { ArticleLink } from '../components/article-link';
 import { ThemeSwitcher } from '../components/theme-switcher';
 import { SectionLoading } from '../components/section-loading';
+import { AsideLinkLists } from '../components/aside-linklists';
+import type { ArticleModel } from '../models/article';
+import type { ArticlePart } from '../models/articlePart';
 
 const getBackLink = (props): string =>
 	hasObjectPath(props, ['location', 'query', 'backLink'])
 		? getObjectPath(props, ['location', 'query', 'backLink'])
 		: articlesUrl;
 
-class ArticlePage extends Component {
+const isExternalLink = (additionalType: string) =>
+	additionalType === 'external';
+
+const partToLink = (part: ArticlePart) => {
+	const isExternal = isExternalLink(part.additionalType);
+
+	return {
+		text: part.headLine,
+		url: isExternal ? part.url : `${articleUrl}${part.identifier}`,
+		isExternal,
+	};
+};
+
+const hasPartToLinkLists = (hasPart: ArticlePart[]) => {
+	const wettenEnRegels = [];
+	const furtherInfo = [];
+
+	hasPart.map(item => {
+		switch (item.additionalType) {
+			case 'regel-nl':
+			case 'wetswijziging-nl':
+			case 'subsidie-nl':
+			case 'page-nl':
+				return wettenEnRegels.push(partToLink(item));
+			default:
+				return furtherInfo.push(partToLink(item));
+		}
+	});
+
+	return [
+		{
+			text: 'Zie ook',
+			links: furtherInfo,
+		},
+		{
+			text: 'Wetten en regels',
+			links: wettenEnRegels,
+		},
+	];
+};
+
+class ArticlePage extends React.Component {
 	/* eslint-disable no-undef */
 	state: {
 		article: ArticleModel,
 		loading: boolean,
+		linkLists: {}[],
 	};
 
 	constructor() {
@@ -32,17 +76,32 @@ class ArticlePage extends Component {
 		this.state = {
 			article: defaultArticle(),
 			loading: true,
+			linkLists: [],
 		};
 	}
 
 	componentDidMount() {
-		getArticle(this.props.match.params.id).then((result: ArticleModel) => {
+		this.fetchArticle(this.props.match.params.id);
+	}
+
+	componentWillReceiveProps(newProps: any) {
+		if (newProps.match.params.id !== this.props.match.params.id) {
+			this.fetchArticle(newProps.match.params.id);
+		}
+	}
+
+	fetchArticle(id: number) {
+		this.setState({ loading: true });
+
+		getArticle(id).then((result: ArticleModel) => {
 			const stateObject = {
 				article: result,
 				loading: false,
+				linkLists: hasPartToLinkLists(result.hasPart),
 			};
 
 			this.setState(stateObject);
+			this.forceUpdate();
 		});
 	}
 
@@ -58,6 +117,7 @@ class ArticlePage extends Component {
 						: <Article article={this.state.article} />}
 				</Column>
 				<Column size="third" sideColumn>
+					<AsideLinkLists linkLists={this.state.linkLists} />
 					<ThemeSwitcher clickHandler={this.props.clickHandler} />
 					<ArticleLink to={this.state.article.url} className="">
 						{'Bekijk deze pagina op Ondernemersplein.nl'}
