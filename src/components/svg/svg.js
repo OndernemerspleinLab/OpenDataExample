@@ -6,11 +6,13 @@ import { Logo } from '../logo';
 import { Zandloper } from './zandloper';
 import { ChevronRight } from './chevronRight';
 import { unexisty } from '../../helpers/functional';
+import { LinkExternal } from './linkExternal';
 
 const icons = {
 	logo: Logo,
 	zandloper: Zandloper,
 	'chevron-right': ChevronRight,
+	'link-external': LinkExternal,
 };
 
 const SvgBase = (props: { icon: string }) => {

@@ -4,6 +4,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Svg } from './svg/svg';
 import { TextLink } from './link';
+import { ExternalLink } from './externalLink';
 
 const InterfaceLinkBase = styled(TextLink)``;
 
@@ -32,6 +33,7 @@ export const InterfaceLink = (props: {
 			<InterfaceLinkText>
 				{props.children}
 			</InterfaceLinkText>
+			<ExternalLink isExternal={props.isExternal} />
 		</InterfaceLinkBase>
 	);
 };
