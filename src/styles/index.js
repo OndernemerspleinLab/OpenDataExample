@@ -11,9 +11,9 @@ export const baseStyles = () => injectGlobal`
 	html {
 		font-size: 100%;
 		
-		@media (min-width: 35em) { font-size: 101.25%; }
-		@media (min-width: 55em) { font-size: 107.5%; }
-		@media (min-width: 81em) { font-size: 120%; }
+		@media (min-width: 35em) { font-size: 106.25%; }
+		@media (min-width: 55em) { font-size: 112.5%; }
+		@media (min-width: 81em) { font-size: 125%; }
 	}
 	
 	body {
