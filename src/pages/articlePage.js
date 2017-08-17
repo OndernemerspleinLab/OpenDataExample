@@ -1,11 +1,11 @@
 // @flow
 
-import React, { Component } from 'react';
+import React from 'react';
 import { getArticle } from '../api/apiCalls';
 import { defaultArticle } from '../models/article';
 import Article from '../components/article';
 import ArticleBackLink from '../components/article-back-link';
-import { articlesUrl } from './main';
+import { articlesUrl, articleUrl } from './main';
 import { getObjectPath, hasObjectPath } from '../helpers/functional';
 import { LayoutContainer } from '../components/layoutContainer';
 import { Column } from '../components/column';
@@ -21,10 +21,16 @@ const getBackLink = (props): string =>
 		? getObjectPath(props, ['location', 'query', 'backLink'])
 		: articlesUrl;
 
+const isExternalLink = (additionalType: string) =>
+	additionalType === 'external';
+
 const partToLink = (part: ArticlePart) => {
+	const isExternal = isExternalLink(part.additionalType);
+
 	return {
 		text: part.headLine,
-		url: part.url,
+		url: isExternal ? part.url : `${articleUrl}${part.identifier}`,
+		isExternal,
 	};
 };
 
@@ -56,12 +62,12 @@ const hasPartToLinkLists = (hasPart: ArticlePart[]) => {
 	];
 };
 
-class ArticlePage extends Component {
+class ArticlePage extends React.Component {
 	/* eslint-disable no-undef */
 	state: {
 		article: ArticleModel,
 		loading: boolean,
-		linkLists: {},
+		linkLists: {}[],
 	};
 
 	constructor() {
@@ -70,12 +76,24 @@ class ArticlePage extends Component {
 		this.state = {
 			article: defaultArticle(),
 			loading: true,
-			linkLists: {},
+			linkLists: [],
 		};
 	}
 
 	componentDidMount() {
-		getArticle(this.props.match.params.id).then((result: ArticleModel) => {
+		this.fetchArticle(this.props.match.params.id);
+	}
+
+	componentWillReceiveProps(newProps: any) {
+		if (newProps.match.params.id !== this.props.match.params.id) {
+			this.fetchArticle(newProps.match.params.id);
+		}
+	}
+
+	fetchArticle(id: number) {
+		this.setState({ loading: true });
+
+		getArticle(id).then((result: ArticleModel) => {
 			const stateObject = {
 				article: result,
 				loading: false,
@@ -83,6 +101,7 @@ class ArticlePage extends Component {
 			};
 
 			this.setState(stateObject);
+			this.forceUpdate();
 		});
 	}
 

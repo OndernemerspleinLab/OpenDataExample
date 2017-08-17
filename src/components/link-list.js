@@ -33,16 +33,21 @@ export const LinkList = (props: { links: [], defaultIcon?: string }) => {
 
 	return (
 		<BaseLinkList>
-			{props.links.map((link, key) =>
-				<ListItem key={key}>
-					<ListLink
-						icon={link.icon ? link.icon : props.defaultIcon}
-						url={link.url}
-					>
-						{link.text}
-					</ListLink>
-				</ListItem>
-			)}
+			{props.links.map((link, key) => {
+				const { icon, url, isExternal } = link;
+
+				return (
+					<ListItem key={key}>
+						<ListLink
+							icon={icon ? icon : props.defaultIcon}
+							url={url}
+							isExternal={isExternal}
+						>
+							{link.text}
+						</ListLink>
+					</ListItem>
+				);
+			})}
 		</BaseLinkList>
 	);
 };
