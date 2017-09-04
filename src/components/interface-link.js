@@ -6,7 +6,9 @@ import { Svg } from './svg/svg';
 import { TextLink } from './link';
 import { ExternalLink } from './externalLink';
 
-const InterfaceLinkBase = styled(TextLink)``;
+const InterfaceLinkBase = styled(TextLink)`
+	display: inline-flex;
+`;
 
 const InterfaceLinkText = styled.span`
 	flex: 1 1 auto;
@@ -19,6 +21,7 @@ const InterfaceLinkIcon = styled(Svg)`
 	flex: 0 0 auto;
 	margin-right: 0.9rem;
 	display: inline-block;
+	height: 1.6rem;
 `;
 
 export const InterfaceLink = (props: {
