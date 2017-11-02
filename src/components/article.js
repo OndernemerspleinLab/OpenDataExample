@@ -59,7 +59,7 @@ const Article = (props: Props) => {
 			<Intro>
 				{article.about}
 			</Intro>
-			<div dangerouslySetInnerHTML={articleBody} ref={fixIframes} />
+			<div dangerouslySetInnerHTML={articleBody} />
 		</article>
 	);
 };
