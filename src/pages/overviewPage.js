@@ -16,6 +16,7 @@ import { LayoutContainer } from '../components/layoutContainer';
 import { Column } from '../components/column';
 import { ThemeSwitcher } from '../components/theme-switcher';
 import { SectionLoading } from '../components/section-loading';
+import { ArticleFilter } from '../components/article-filter';
 
 const getTotal = statePart => getObjectPath(statePart, ['pagination', 'total']);
 
@@ -27,36 +28,47 @@ class OverviewPage extends React.Component {
 			events: {},
 			subsidies: {},
 			loading: true,
+			filter: {
+				searchTerm: '',
+			},
 		};
 	}
 
 	componentWillReceiveProps(newProps: any) {
 		if (newProps.match.params.offset !== this.props.match.params.offset) {
-			this.setState({
-				...this.state,
-				loading: true,
-			});
-
-			getArticles(newProps.match.params.offset).then(result => {
-				this.setState({
-					...this.state,
-					articles: result,
-					loading: false,
-				});
-			});
+			this.fetchArticles(newProps.match.params.offset);
 		}
 	}
 
 	componentDidMount() {
-		const articles = getArticles(this.props.match.params.offset);
-		const events = getEvents();
-		const subsidies = getSubsidies();
+		const offset = this.props.match.params.offset;
+		const articlesPromise = getArticles({ offset });
+		const eventsPromise = getEvents();
+		const subsidiesPromise = getSubsidies();
 
-		Promise.all([articles, events, subsidies]).then(result => {
+		Promise.all([
+			articlesPromise,
+			eventsPromise,
+			subsidiesPromise,
+		]).then(result => {
+			const [articles, events, subsidies] = result;
+
 			this.setState({
-				articles: result[0],
-				events: result[1],
-				subsidies: result[2],
+				articles,
+				events,
+				subsidies,
+				loading: false,
+			});
+		});
+	}
+
+	fetchArticles({ offset, searchTerm }) {
+		this.setState({ loading: true });
+
+		return getArticles({ offset, searchTerm }).then(result => {
+			this.setState({
+				...this.state,
+				articles: result,
 				loading: false,
 			});
 		});
@@ -117,6 +129,7 @@ class OverviewPage extends React.Component {
 							</ReferenceLink>
 						</li>
 					</ul>
+					<ArticleFilter filter={this.state.filter} />
 					<p>
 						{'Klik op een antwoordpagina om de inhoud van de API te bekijken.'}
 					</p>
