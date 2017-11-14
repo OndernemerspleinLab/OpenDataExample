@@ -23,7 +23,9 @@ const HeaderBase = () =>
 	<Header>
 		<TopHeader>
 			<Logo />
-			<Payoff>Ondernemersplein OpenData Example</Payoff>
+			<Payoff>
+				{'Ondernemersplein OpenData Example'}
+			</Payoff>
 		</TopHeader>
 		<BrandBar />
 	</Header>;
