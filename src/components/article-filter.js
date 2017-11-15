@@ -18,7 +18,7 @@ const SearchWrapper = styled.div`
 	${mediaObject};
 
 	max-width: 40rem;
-	margin-bottom: 2rem;
+	margin: 2rem 0;
 	align-items: stretch;
 `;
 
@@ -39,7 +39,7 @@ export const ArticleFilter = (props: {
 				<SearchBox
 					id={searchInputId}
 					name="searchInput"
-					defaultValue={filter.searchTerm}
+					value={filter.searchTerm}
 					handleSearch={handleChange}
 				/>
 				<SearchButton>

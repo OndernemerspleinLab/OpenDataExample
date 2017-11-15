@@ -8,31 +8,16 @@ import {
 	subsidiesEndpoint,
 } from '../api/apiCalls';
 import ArticleList from '../components/article-list';
-import { existy, getObjectPath } from '../helpers/functional';
+import { getObjectPath } from '../helpers/functional';
 import TotalString from '../components/total-string';
 import ReferenceLink from '../components/reference-link';
 import { LayoutContainer } from '../components/layoutContainer';
 import { Column } from '../components/column';
 import { ThemeSwitcher } from '../components/theme-switcher';
 import { SectionLoading } from '../components/section-loading';
-import { ArticleFilter, searchInputId } from '../components/article-filter';
-
-const getQueryFromForm = formElement => {
-	// If FormData api is fully supported, use it to get the query
-	if (typeof FormData === 'function' && existy(FormData.prototype.get)) {
-		const formData = new FormData(formElement);
-
-		return formData.get(searchInputId) || '';
-	}
-
-	const searchInputElement = document.getElementById(searchInputId);
-
-	if (searchInputElement) {
-		return searchInputElement.value;
-	}
-
-	return '';
-};
+import { ArticleFilter } from '../components/article-filter';
+import { getQueryFromForm } from '../helpers/formHelper';
+import { SearchResult } from '../components/searchResult';
 
 const getTotal = statePart => getObjectPath(statePart, ['pagination', 'total']);
 
@@ -41,8 +26,9 @@ class OverviewPage extends React.Component {
 		super();
 		this.state = {
 			articles: {},
-			events: {},
-			subsidies: {},
+			totalArticles: 0,
+			totalEvents: 0,
+			totalSubsidies: 0,
 			loading: true,
 			filter: {
 				searchTerm: '',
@@ -71,8 +57,9 @@ class OverviewPage extends React.Component {
 
 			this.setState({
 				articles,
-				events,
-				subsidies,
+				totalArticles: getTotal(articles),
+				totalEvents: getTotal(events),
+				totalSubsidies: getTotal(subsidies),
 				loading: false,
 			});
 		});
@@ -90,7 +77,13 @@ class OverviewPage extends React.Component {
 		});
 	}
 
-	handleSearchArticlesTyped(query) {
+	handleSearchArticles(query) {
+		this.setState({
+			...this.state,
+			filter: {
+				searchTerm: query,
+			},
+		});
 		this.fetchArticles({ query });
 	}
 
@@ -98,10 +91,19 @@ class OverviewPage extends React.Component {
 		event.preventDefault();
 		const query = getQueryFromForm(event.currentTarget);
 
-		this.fetchArticles({ query });
+		this.handleSearchArticles(query);
 	}
 
 	render() {
+		const {
+			totalArticles,
+			totalEvents,
+			totalSubsidies,
+			filter,
+			articles,
+			loading,
+		} = this.state;
+
 		return (
 			<LayoutContainer>
 				<Column size="twoThird">
@@ -121,7 +123,7 @@ class OverviewPage extends React.Component {
 							{`Datum: ${new Date().toLocaleDateString()}`}
 						</li>
 						<li>
-							<TotalString total={getTotal(this.state.articles)}>
+							<TotalString total={totalArticles}>
 								{`Aantal antwoordpagina's`}
 							</TotalString>
 							<ReferenceLink href="https://www.ondernemersplein.nl/">
@@ -134,7 +136,7 @@ class OverviewPage extends React.Component {
 							</ReferenceLink>
 						</li>
 						<li>
-							<TotalString total={getTotal(this.state.events)}>
+							<TotalString total={totalEvents}>
 								{'Aantal evenementen'}
 							</TotalString>
 							<ReferenceLink href="https://www.ondernemersplein.nl/evenementen/">
@@ -145,7 +147,7 @@ class OverviewPage extends React.Component {
 							</ReferenceLink>
 						</li>
 						<li>
-							<TotalString total={getTotal(this.state.subsidies)}>
+							<TotalString total={totalSubsidies}>
 								{'Aantal subsidies'}
 							</TotalString>
 							<ReferenceLink href="https://www.ondernemersplein.nl/ondernemen/geldzaken/subsidies/">
@@ -157,17 +159,18 @@ class OverviewPage extends React.Component {
 						</li>
 					</ul>
 					<ArticleFilter
-						filter={this.state.filter}
+						filter={filter}
 						handleSearch={this.handleSearchArticlesSubmit.bind(this)}
-						handleChange={this.handleSearchArticlesTyped.bind(this)}
+						handleChange={this.handleSearchArticles.bind(this)}
 					/>
-					<p>
-						{'Klik op een antwoordpagina om de inhoud van de API te bekijken.'}
-					</p>
-					{this.state.loading
+					<SearchResult
+						results={articles.articles}
+						searchTerm={filter.searchTerm}
+					/>
+					{loading
 						? <SectionLoading />
 						: <ArticleList
-								articles={this.state.articles}
+								articles={articles}
 								pathname={getObjectPath(this.props, ['location', 'pathname'])}
 							/>}
 				</Column>

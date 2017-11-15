@@ -1,15 +1,15 @@
 import React from 'react';
 import { debounce } from '../helpers/functional';
-// import styled from 'styled-components';
-// import { mediaObjectText } from '../styles/mediaObject';
+import styled from 'styled-components';
+import { mediaObjectText } from '../styles/mediaObject';
 
-// const TextInput = styled.input`
-// 	${mediaObjectText};
-//
-// 	padding: 0.5rem 0 0.65rem;
-// 	padding-left: 1rem;
-// 	border: 1px solid #033054;
-// `;
+const TextInput = styled.input`
+	${mediaObjectText};
+
+	padding: 0.5rem 0 0.65rem;
+	padding-left: 1rem;
+	border: 1px solid #033054;
+`;
 
 const searchBoxRef = 'searchBox';
 
@@ -38,8 +38,8 @@ export class SearchBox extends React.Component {
 
 	render() {
 		return (
-			<input
-				className={this.props.className}
+			<TextInput
+				{...this.props}
 				ref={searchBoxRef}
 				type="search"
 				value={this.state.value}
