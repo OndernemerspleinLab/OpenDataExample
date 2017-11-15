@@ -3,15 +3,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Button } from './button';
-import {
-	mediaObject,
-	mediaObjectFigure,
-	mediaObjectText,
-} from '../styles/mediaObject';
+import { mediaObject, mediaObjectFigure } from '../styles/mediaObject';
+import { SearchBox } from './searchBox';
 
 export type FilterObject = {
 	searchTerm: string,
 };
+
+export const searchInputId = 'searchInput';
 
 const Form = styled.form``;
 
@@ -23,28 +22,25 @@ const SearchWrapper = styled.div`
 	align-items: stretch;
 `;
 
-const TextInput = styled.input`
-	${mediaObjectText};
-
-	padding: 0.5rem 0 0.65rem;
-	padding-left: 1rem;
-	border: 1px solid #033054;
-`;
-
 const SearchButton = styled(Button)`
 	${mediaObjectFigure};
 `;
 
-export const ArticleFilter = (props: { filter: FilterObject }) => {
-	const filter = props.filter;
+export const ArticleFilter = (props: {
+	filter: FilterObject,
+	handleSubmit: Function,
+	handleChange: Function,
+}) => {
+	const { filter, handleSubmit, handleChange } = props;
 
 	return (
-		<Form>
+		<Form onSubmit={handleSubmit}>
 			<SearchWrapper>
-				<TextInput
-					type="search"
+				<SearchBox
+					id={searchInputId}
 					name="searchInput"
 					defaultValue={filter.searchTerm}
+					handleSearch={handleChange}
 				/>
 				<SearchButton>
 					<span>

@@ -36,3 +36,28 @@ export const getObjectPath = (object: Object, path: Array) =>
 	path.reduce((obj, key) => {
 		return isNotObject(obj) ? obj : obj[key];
 	}, object);
+
+export const delayed = (delay, callback, ...args) => {
+	if (unexisty(delay) || delay === 0) {
+		callback(...args);
+		return null;
+	} else {
+		return setTimeout(() => callback(...args), delay);
+	}
+};
+
+export const debounce = (callback, delay) => {
+	let timer;
+
+	const debounced = (...args) => {
+		clearTimeout(timer);
+		timer = delayed(delay, callback, ...args);
+	};
+
+	debounced.now = (...args) => {
+		clearTimeout(timer);
+		callback(...args);
+	};
+
+	return debounced;
+};

@@ -8,6 +8,7 @@ import type { SubsidieModel } from '../models/subsidie';
 import type { SubsidiesModel } from '../models/subsidies';
 import { fetchJson } from './fetch';
 import type { ArticleType } from '../models/article-type';
+import type { SortTokens } from '../models/sortTokens';
 
 type PromiseArticle = Promise<ArticleModel>;
 type PromiseArticles = Promise<ArticlesModel>;
@@ -16,13 +17,14 @@ type PromiseEvents = Promise<EventsModel>;
 type PromiseSubsidie = Promise<SubsidieModel>;
 type PromiseSubsidies = Promise<SubsidiesModel>;
 type ArticleParams = {
-	offset: number,
-	type: ArticleType[],
-	sort: string,
-	direction: 'ascending' | 'descending',
+	offset?: number,
+	type?: ArticleType[],
+	sorts?: SortTokens[],
+	search?: string,
 };
 
-const apiOrigin = 'https://opendata.ondernemersplein.nl';
+// const apiOrigin = 'https://opendata.ondernemersplein.nl';
+const apiOrigin = 'http://se94aoesb01:8012';
 export const apiBaseUrl = `${apiOrigin}/api/`;
 export const articlesEndpoint = `${apiBaseUrl}v1/articles/`;
 export const eventsEndpoint = `${apiBaseUrl}events/`;
@@ -30,16 +32,14 @@ export const subsidiesEndpoint = `${apiBaseUrl}subsidies/`;
 
 export const getArticles = (props: {
 	offset: any,
-	searchTerm: String,
+	search: string,
 }): PromiseArticles => {
-	const { offset = 0, searchTerm = '' } = props;
+	const { offset = 0, search = '' } = props;
 
 	const params: ArticleParams = {
 		offset,
 		type: ['antwoordpagina-nl'],
-		sort: 'headLine',
-		direction: 'ascending',
-		searchTerm,
+		search,
 	};
 
 	return fetchJson(articlesEndpoint, {}, params);

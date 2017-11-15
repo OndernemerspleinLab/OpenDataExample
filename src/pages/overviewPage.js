@@ -4,19 +4,35 @@ import {
 	articlesEndpoint,
 	eventsEndpoint,
 	getArticles,
-	getEvents,
 	getSubsidies,
 	subsidiesEndpoint,
 } from '../api/apiCalls';
 import ArticleList from '../components/article-list';
-import { getObjectPath } from '../helpers/functional';
+import { existy, getObjectPath } from '../helpers/functional';
 import TotalString from '../components/total-string';
 import ReferenceLink from '../components/reference-link';
 import { LayoutContainer } from '../components/layoutContainer';
 import { Column } from '../components/column';
 import { ThemeSwitcher } from '../components/theme-switcher';
 import { SectionLoading } from '../components/section-loading';
-import { ArticleFilter } from '../components/article-filter';
+import { ArticleFilter, searchInputId } from '../components/article-filter';
+
+const getQueryFromForm = formElement => {
+	// If FormData api is fully supported, use it to get the query
+	if (typeof FormData === 'function' && existy(FormData.prototype.get)) {
+		const formData = new FormData(formElement);
+
+		return formData.get(searchInputId) || '';
+	}
+
+	const searchInputElement = document.getElementById(searchInputId);
+
+	if (searchInputElement) {
+		return searchInputElement.value;
+	}
+
+	return '';
+};
 
 const getTotal = statePart => getObjectPath(statePart, ['pagination', 'total']);
 
@@ -43,12 +59,12 @@ class OverviewPage extends React.Component {
 	componentDidMount() {
 		const offset = this.props.match.params.offset;
 		const articlesPromise = getArticles({ offset });
-		const eventsPromise = getEvents();
+		//const eventsPromise = getEvents();
 		const subsidiesPromise = getSubsidies();
 
 		Promise.all([
 			articlesPromise,
-			eventsPromise,
+			//eventsPromise,
 			subsidiesPromise,
 		]).then(result => {
 			const [articles, events, subsidies] = result;
@@ -62,16 +78,27 @@ class OverviewPage extends React.Component {
 		});
 	}
 
-	fetchArticles({ offset, searchTerm }) {
+	fetchArticles({ offset, query }) {
 		this.setState({ loading: true });
 
-		return getArticles({ offset, searchTerm }).then(result => {
+		return getArticles({ offset, search: query }).then(result => {
 			this.setState({
 				...this.state,
 				articles: result,
 				loading: false,
 			});
 		});
+	}
+
+	handleSearchArticlesTyped(query) {
+		this.fetchArticles({ query });
+	}
+
+	handleSearchArticlesSubmit(event) {
+		event.preventDefault();
+		const query = getQueryFromForm(event.currentTarget);
+
+		this.fetchArticles({ query });
 	}
 
 	render() {
@@ -129,7 +156,11 @@ class OverviewPage extends React.Component {
 							</ReferenceLink>
 						</li>
 					</ul>
-					<ArticleFilter filter={this.state.filter} />
+					<ArticleFilter
+						filter={this.state.filter}
+						handleSearch={this.handleSearchArticlesSubmit.bind(this)}
+						handleChange={this.handleSearchArticlesTyped.bind(this)}
+					/>
 					<p>
 						{'Klik op een antwoordpagina om de inhoud van de API te bekijken.'}
 					</p>
