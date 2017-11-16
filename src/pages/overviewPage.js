@@ -4,7 +4,6 @@ import {
 	articlesEndpoint,
 	eventsEndpoint,
 	getArticles,
-	getEvents,
 	getSubsidies,
 	subsidiesEndpoint,
 } from '../api/apiCalls';
@@ -16,6 +15,9 @@ import { LayoutContainer } from '../components/layoutContainer';
 import { Column } from '../components/column';
 import { ThemeSwitcher } from '../components/theme-switcher';
 import { SectionLoading } from '../components/section-loading';
+import { ArticleFilter } from '../components/article-filter';
+import { getQueryFromForm } from '../helpers/formHelper';
+import { SearchResult } from '../components/searchResult';
 
 const getTotal = statePart => getObjectPath(statePart, ['pagination', 'total']);
 
@@ -24,45 +26,84 @@ class OverviewPage extends React.Component {
 		super();
 		this.state = {
 			articles: {},
-			events: {},
-			subsidies: {},
+			totalArticles: 0,
+			totalEvents: 0,
+			totalSubsidies: 0,
 			loading: true,
+			filter: {
+				searchTerm: '',
+			},
 		};
 	}
 
 	componentWillReceiveProps(newProps: any) {
 		if (newProps.match.params.offset !== this.props.match.params.offset) {
-			this.setState({
-				...this.state,
-				loading: true,
-			});
-
-			getArticles(newProps.match.params.offset).then(result => {
-				this.setState({
-					...this.state,
-					articles: result,
-					loading: false,
-				});
-			});
+			this.fetchArticles(newProps.match.params.offset);
 		}
 	}
 
 	componentDidMount() {
-		const articles = getArticles(this.props.match.params.offset);
-		const events = getEvents();
-		const subsidies = getSubsidies();
+		const offset = this.props.match.params.offset;
+		const articlesPromise = getArticles({ offset });
+		//const eventsPromise = getEvents();
+		const subsidiesPromise = getSubsidies();
 
-		Promise.all([articles, events, subsidies]).then(result => {
+		Promise.all([
+			articlesPromise,
+			//eventsPromise,
+			subsidiesPromise,
+		]).then(result => {
+			const [articles, events, subsidies] = result;
+
 			this.setState({
-				articles: result[0],
-				events: result[1],
-				subsidies: result[2],
+				articles,
+				totalArticles: getTotal(articles),
+				totalEvents: getTotal(events),
+				totalSubsidies: getTotal(subsidies),
 				loading: false,
 			});
 		});
 	}
 
+	fetchArticles({ offset, query }) {
+		this.setState({ loading: true });
+
+		return getArticles({ offset, search: query }).then(result => {
+			this.setState({
+				...this.state,
+				articles: result,
+				loading: false,
+			});
+		});
+	}
+
+	handleSearchArticles(query) {
+		this.setState({
+			...this.state,
+			filter: {
+				searchTerm: query,
+			},
+		});
+		this.fetchArticles({ query });
+	}
+
+	handleSearchArticlesSubmit(event) {
+		event.preventDefault();
+		const query = getQueryFromForm(event.currentTarget);
+
+		this.handleSearchArticles(query);
+	}
+
 	render() {
+		const {
+			totalArticles,
+			totalEvents,
+			totalSubsidies,
+			filter,
+			articles,
+			loading,
+		} = this.state;
+
 		return (
 			<LayoutContainer>
 				<Column size="twoThird">
@@ -82,7 +123,7 @@ class OverviewPage extends React.Component {
 							{`Datum: ${new Date().toLocaleDateString()}`}
 						</li>
 						<li>
-							<TotalString total={getTotal(this.state.articles)}>
+							<TotalString total={totalArticles}>
 								{`Aantal antwoordpagina's`}
 							</TotalString>
 							<ReferenceLink href="https://www.ondernemersplein.nl/">
@@ -95,7 +136,7 @@ class OverviewPage extends React.Component {
 							</ReferenceLink>
 						</li>
 						<li>
-							<TotalString total={getTotal(this.state.events)}>
+							<TotalString total={totalEvents}>
 								{'Aantal evenementen'}
 							</TotalString>
 							<ReferenceLink href="https://www.ondernemersplein.nl/evenementen/">
@@ -106,7 +147,7 @@ class OverviewPage extends React.Component {
 							</ReferenceLink>
 						</li>
 						<li>
-							<TotalString total={getTotal(this.state.subsidies)}>
+							<TotalString total={totalSubsidies}>
 								{'Aantal subsidies'}
 							</TotalString>
 							<ReferenceLink href="https://www.ondernemersplein.nl/ondernemen/geldzaken/subsidies/">
@@ -117,13 +158,19 @@ class OverviewPage extends React.Component {
 							</ReferenceLink>
 						</li>
 					</ul>
-					<p>
-						{'Klik op een antwoordpagina om de inhoud van de API te bekijken.'}
-					</p>
-					{this.state.loading
+					<ArticleFilter
+						filter={filter}
+						handleSearch={this.handleSearchArticlesSubmit.bind(this)}
+						handleChange={this.handleSearchArticles.bind(this)}
+					/>
+					<SearchResult
+						results={articles.articles}
+						searchTerm={filter.searchTerm}
+					/>
+					{loading
 						? <SectionLoading />
 						: <ArticleList
-								articles={this.state.articles}
+								articles={articles}
 								pathname={getObjectPath(this.props, ['location', 'pathname'])}
 							/>}
 				</Column>

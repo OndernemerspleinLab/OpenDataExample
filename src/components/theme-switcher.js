@@ -10,5 +10,7 @@ const SwitchButton = styled(Button)`
 
 export const ThemeSwitcher = props =>
 	<SwitchButton onClick={props.clickHandler} primary>
-		<span>Wijzig stijl</span>
+		<span>
+			{'Wijzig stijl'}
+		</span>
 	</SwitchButton>;
