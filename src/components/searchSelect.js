@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { getLineHeight } from '../styles/mixins/fontSize';
 import { grijs } from '../styles/colors';
+import { debounce } from '../helpers/functional';
 
 export const Select = styled.select`
 	${getLineHeight('formField')};
@@ -30,11 +31,13 @@ export class SearchSelect extends React.Component {
 	}
 
 	componentWillMount() {
-		this.fireHandleSelect = () => {
-			this.props.handleSelect.apply(this, [
-				{ [this.props.name]: this.state.selectedValue },
-			]);
-		};
+		this.debouncedHandleSelect = debounce(
+			() =>
+				this.props.handleSelect.apply(this, [
+					{ [this.props.name]: this.state.selectedValue },
+				]),
+			100
+		);
 	}
 
 	handleChange(event) {
@@ -42,7 +45,7 @@ export class SearchSelect extends React.Component {
 			...this.state,
 			selectedValue: event.target.value,
 		});
-		this.fireHandleSelect();
+		this.debouncedHandleSelect();
 	}
 
 	render() {

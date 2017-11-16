@@ -29,8 +29,8 @@ const getSortsQuery = props => {
 
 const filterOptions = {
 	sortFilter: [
-		{ title: 'Modified', value: 'modified', selected: true },
-		{ title: 'Type', value: 'type' },
+		{ title: 'Datum laatste wijziging', value: 'modified', selected: true },
+		{ title: 'Artikeltype', value: 'type' },
 	],
 	directionFilter: [
 		{ title: 'Oplopend', value: 'asc' },

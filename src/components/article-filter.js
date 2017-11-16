@@ -19,19 +19,25 @@ const ArticleFilterWrapper = styled.div`
 	margin: 2rem 0;
 	max-width: 40rem;
 	display: flex;
+	flex-wrap: wrap;
 `;
 
 const SearchWrapper = styled.div`
 	${mediaObject};
 
 	align-items: stretch;
+	flex: 1 1 auto;
+	margin-bottom: 1rem;
 `;
 
 const SearchButton = styled(Button)`
 	${mediaObjectFigure};
 `;
 
-const FilterWrapper = styled.div``;
+const FilterWrapper = styled.div`
+	flex: 0 1 auto;
+	margin-bottom: 1rem;
+`;
 
 export const ArticleFilter = (props: {
 	filter: FilterObject,
