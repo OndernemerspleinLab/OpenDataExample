@@ -4,14 +4,42 @@ import { articleUrl } from '../pages/main';
 import { unexisty } from '../helpers/functional';
 import { AnchorLink } from './link';
 import Pagination from './pagination';
+import { grijs } from '../styles/colors';
 
 const articlesPerPage = 20;
-
 const ArticleWrapper = styled.div``;
 
-const ArticleLink = styled(AnchorLink)`
-	display: block;
+const ArticleEntryWrapper = styled.div`display: flex;`;
+
+const Identifier = styled.span`
+	font-size: 0.7rem;
+	margin-right: 1rem;
+	padding-top: 4px;
+	color: ${grijs.default};
 `;
+
+const ArticleLink = styled(AnchorLink)`
+`;
+
+const ArticleEntry = props => {
+	const { identifier, headLine } = props.article;
+
+	return (
+		<ArticleEntryWrapper>
+			<Identifier>
+				{identifier}
+			</Identifier>
+			<ArticleLink
+				to={{
+					pathname: `${articleUrl}${identifier}`,
+					query: { backLink: props.pathname },
+				}}
+			>
+				{headLine}
+			</ArticleLink>
+		</ArticleEntryWrapper>
+	);
+};
 
 const ArticleList = props => {
 	const { articles, pagination } = props.articles;
@@ -24,15 +52,7 @@ const ArticleList = props => {
 		<ArticleWrapper>
 			{articles.map((article, key) => {
 				return (
-					<ArticleLink
-						key={key}
-						to={{
-							pathname: `${articleUrl}${article.identifier}`,
-							query: { backLink: props.pathname },
-						}}
-					>
-						{article.headLine}
-					</ArticleLink>
+					<ArticleEntry key={key} article={article} pathname={props.pathname} />
 				);
 			})}
 			<Pagination pagination={pagination} limit={articlesPerPage} />

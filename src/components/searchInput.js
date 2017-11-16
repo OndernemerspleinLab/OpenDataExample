@@ -11,14 +11,12 @@ const TextInput = styled.input`
 	border: 1px solid #033054;
 `;
 
-const searchBoxRef = 'searchBox';
-
-export class SearchBox extends React.Component {
+export class SearchInput extends React.Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			value: '',
+			searchTerm: '',
 		};
 
 		this.handleChange = this.handleChange.bind(this);
@@ -26,13 +24,16 @@ export class SearchBox extends React.Component {
 
 	componentWillMount() {
 		this.handleSearchDebounced = debounce(
-			() => this.props.handleSearch.apply(this, [this.state.value]),
+			() =>
+				this.props.handleSearch.apply(this, [
+					{ searchTerm: this.state.searchTerm },
+				]),
 			400
 		);
 	}
 
 	handleChange(event) {
-		this.setState({ value: event.target.value });
+		this.setState({ searchTerm: event.target.value });
 		this.handleSearchDebounced();
 	}
 
@@ -40,9 +41,8 @@ export class SearchBox extends React.Component {
 		return (
 			<TextInput
 				{...this.props}
-				ref={searchBoxRef}
 				type="search"
-				value={this.state.value}
+				value={this.state.searchTerm}
 				onChange={this.handleChange}
 			/>
 		);

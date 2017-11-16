@@ -21,6 +21,23 @@ import { SearchResult } from '../components/searchResult';
 
 const getTotal = statePart => getObjectPath(statePart, ['pagination', 'total']);
 
+const getSortsQuery = props => {
+	const { sort = 'modified', direction = 'desc' } = props;
+
+	return `${sort}:${direction}`;
+};
+
+const filterOptions = {
+	sortFilter: [
+		{ title: 'Modified', value: 'modified', selected: true },
+		{ title: 'Type', value: 'type' },
+	],
+	directionFilter: [
+		{ title: 'Oplopend', value: 'asc' },
+		{ title: 'Aflopend', value: 'desc', selected: true },
+	],
+};
+
 class OverviewPage extends React.Component {
 	constructor() {
 		super();
@@ -32,6 +49,8 @@ class OverviewPage extends React.Component {
 			loading: true,
 			filter: {
 				searchTerm: '',
+				sortField: 'modified',
+				sortDirection: 'desc',
 			},
 		};
 	}
@@ -65,10 +84,11 @@ class OverviewPage extends React.Component {
 		});
 	}
 
-	fetchArticles({ offset, query }) {
+	fetchArticles({ offset, query, sort, direction }) {
 		this.setState({ loading: true });
+		const sorts = getSortsQuery({ sort, direction });
 
-		return getArticles({ offset, search: query }).then(result => {
+		return getArticles({ offset, search: query, sorts }).then(result => {
 			this.setState({
 				...this.state,
 				articles: result,
@@ -77,21 +97,29 @@ class OverviewPage extends React.Component {
 		});
 	}
 
-	handleSearchArticles(query) {
+	handleSearchArticles(props) {
+		const { searchTerm, sortField, sortDirection } = props;
+
 		this.setState({
 			...this.state,
 			filter: {
-				searchTerm: query,
+				searchTerm,
+				sortField,
+				sortDirection,
 			},
 		});
-		this.fetchArticles({ query });
+		this.fetchArticles({
+			query: searchTerm,
+			sort: sortField,
+			direction: sortDirection,
+		});
 	}
 
 	handleSearchArticlesSubmit(event) {
 		event.preventDefault();
-		const query = getQueryFromForm(event.currentTarget);
+		const searchTerm = getQueryFromForm(event.currentTarget);
 
-		this.handleSearchArticles(query);
+		this.handleSearchArticles({ searchTerm });
 	}
 
 	render() {
@@ -162,6 +190,7 @@ class OverviewPage extends React.Component {
 						filter={filter}
 						handleSearch={this.handleSearchArticlesSubmit.bind(this)}
 						handleChange={this.handleSearchArticles.bind(this)}
+						filterOptions={filterOptions}
 					/>
 					<SearchResult
 						results={articles.articles}

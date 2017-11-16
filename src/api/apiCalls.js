@@ -23,7 +23,8 @@ type ArticleParams = {
 	search?: string,
 };
 
-const apiOrigin = 'https://opendata.ondernemersplein.nl';
+// const apiOrigin = 'https://opendata.ondernemersplein.nl';
+const apiOrigin = 'http://se94aoesb01:8012';
 export const apiBaseUrl = `${apiOrigin}/api/`;
 export const articlesEndpoint = `${apiBaseUrl}v1/articles/`;
 export const eventsEndpoint = `${apiBaseUrl}events/`;
@@ -32,13 +33,15 @@ export const subsidiesEndpoint = `${apiBaseUrl}subsidies/`;
 export const getArticles = (props: {
 	offset: any,
 	search: string,
+	sorts: string,
 }): PromiseArticles => {
-	const { offset = 0, search = '' } = props;
+	const { offset = 0, search = '', sorts = '' } = props;
 
 	const params: ArticleParams = {
 		offset,
 		type: ['antwoordpagina-nl'],
 		search,
+		sorts,
 	};
 
 	return fetchJson(articlesEndpoint, {}, params);
