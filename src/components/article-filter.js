@@ -46,7 +46,7 @@ export const ArticleFilter = (props: {
 	filterOptions: Object,
 }) => {
 	const { filter, handleChange, filterOptions } = props;
-	const { sortFilter, directionFilter } = filterOptions;
+	const { directionFilter } = filterOptions;
 
 	return (
 		<Form onSubmit={preventDefault}>

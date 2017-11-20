@@ -29,13 +29,9 @@ const getOrderQuery = props => {
 };
 
 const filterOptions = {
-	sortFilter: [
-		{ title: 'Datum laatste wijziging', value: 'modified', selected: true },
-		{ title: 'Artikeltype', value: 'type' },
-	],
 	directionFilter: [
+		{ title: 'Aflopend', value: 'desc' },
 		{ title: 'Oplopend', value: 'asc' },
-		{ title: 'Aflopend', value: 'desc', selected: true },
 	],
 };
 
