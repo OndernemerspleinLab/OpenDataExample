@@ -41,7 +41,7 @@ export const getArticles = (props: {
 		offset,
 		type: ['antwoordpagina-nl'],
 		search,
-		sorts: order,
+		order,
 	};
 
 	return fetchJson(articlesEndpoint, {}, params);
