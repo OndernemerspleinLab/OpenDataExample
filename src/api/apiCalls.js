@@ -19,11 +19,12 @@ type PromiseSubsidies = Promise<SubsidiesModel>;
 type ArticleParams = {
 	offset?: number,
 	type?: ArticleType[],
-	sorts?: SortTokens[],
+	order?: SortTokens[],
 	search?: string,
 };
 
-const apiOrigin = 'https://opendata.ondernemersplein.nl';
+// const apiOrigin = 'https://opendata.ondernemersplein.nl';
+const apiOrigin = 'http://se94aoesb01:8012';
 export const apiBaseUrl = `${apiOrigin}/api/`;
 export const articlesEndpoint = `${apiBaseUrl}v1/articles/`;
 export const eventsEndpoint = `${apiBaseUrl}events/`;
@@ -32,13 +33,15 @@ export const subsidiesEndpoint = `${apiBaseUrl}subsidies/`;
 export const getArticles = (props: {
 	offset: any,
 	search: string,
+	order: string,
 }): PromiseArticles => {
-	const { offset = 0, search = '' } = props;
+	const { offset = 0, search = '', order = '' } = props;
 
 	const params: ArticleParams = {
 		offset,
 		type: ['antwoordpagina-nl'],
 		search,
+		sorts: order,
 	};
 
 	return fetchJson(articlesEndpoint, {}, params);

@@ -6,6 +6,7 @@ import {
 	getArticles,
 	getSubsidies,
 	subsidiesEndpoint,
+	getEvents,
 } from '../api/apiCalls';
 import ArticleList from '../components/article-list';
 import { getObjectPath } from '../helpers/functional';
@@ -16,10 +17,27 @@ import { Column } from '../components/column';
 import { ThemeSwitcher } from '../components/theme-switcher';
 import { SectionLoading } from '../components/section-loading';
 import { ArticleFilter } from '../components/article-filter';
-import { getQueryFromForm } from '../helpers/formHelper';
 import { SearchResult } from '../components/searchResult';
+import { formatDate } from '../helpers/date';
 
 const getTotal = statePart => getObjectPath(statePart, ['pagination', 'total']);
+
+const getOrderQuery = props => {
+	const { sort = 'modified', direction = 'desc' } = props;
+
+	return `${sort}:${direction}`;
+};
+
+const filterOptions = {
+	sortFilter: [
+		{ title: 'Datum laatste wijziging', value: 'modified', selected: true },
+		{ title: 'Artikeltype', value: 'type' },
+	],
+	directionFilter: [
+		{ title: 'Oplopend', value: 'asc' },
+		{ title: 'Aflopend', value: 'desc', selected: true },
+	],
+};
 
 class OverviewPage extends React.Component {
 	constructor() {
@@ -32,8 +50,11 @@ class OverviewPage extends React.Component {
 			loading: true,
 			filter: {
 				searchTerm: '',
+				sortField: 'modified',
+				sortDirection: 'desc',
 			},
 		};
+		this.handleSearchArticles = this.handleSearchArticles.bind(this);
 	}
 
 	componentWillReceiveProps(newProps: any) {
@@ -45,12 +66,12 @@ class OverviewPage extends React.Component {
 	componentDidMount() {
 		const offset = this.props.match.params.offset;
 		const articlesPromise = getArticles({ offset });
-		//const eventsPromise = getEvents();
+		const eventsPromise = getEvents();
 		const subsidiesPromise = getSubsidies();
 
 		Promise.all([
 			articlesPromise,
-			//eventsPromise,
+			eventsPromise,
 			subsidiesPromise,
 		]).then(result => {
 			const [articles, events, subsidies] = result;
@@ -65,10 +86,11 @@ class OverviewPage extends React.Component {
 		});
 	}
 
-	fetchArticles({ offset, query }) {
+	fetchArticles({ offset, query, sort, direction }) {
 		this.setState({ loading: true });
+		const order = getOrderQuery({ sort, direction });
 
-		return getArticles({ offset, search: query }).then(result => {
+		return getArticles({ offset, search: query, order }).then(result => {
 			this.setState({
 				...this.state,
 				articles: result,
@@ -77,21 +99,26 @@ class OverviewPage extends React.Component {
 		});
 	}
 
-	handleSearchArticles(query) {
+	handleSearchArticles(props) {
+		const { filter } = this.state;
+		const {
+			searchTerm = filter.searchTerm,
+			sortField = filter.sortField,
+			sortDirection = filter.sortDirection,
+		} = props;
+
 		this.setState({
-			...this.state,
 			filter: {
-				searchTerm: query,
+				searchTerm,
+				sortField,
+				sortDirection,
 			},
 		});
-		this.fetchArticles({ query });
-	}
-
-	handleSearchArticlesSubmit(event) {
-		event.preventDefault();
-		const query = getQueryFromForm(event.currentTarget);
-
-		this.handleSearchArticles(query);
+		this.fetchArticles({
+			query: searchTerm,
+			sort: sortField,
+			direction: sortDirection,
+		});
 	}
 
 	render() {
@@ -120,15 +147,12 @@ class OverviewPage extends React.Component {
 					</p>
 					<ul>
 						<li>
-							{`Datum: ${new Date().toLocaleDateString()}`}
+							{`Datum: ${formatDate(new Date())}`}
 						</li>
 						<li>
 							<TotalString total={totalArticles}>
 								{`Aantal antwoordpagina's`}
 							</TotalString>
-							<ReferenceLink href="https://www.ondernemersplein.nl/">
-								{'(Bekijk op ondernemersplein.nl)'}
-							</ReferenceLink>
 							<ReferenceLink
 								href={`${articlesEndpoint}?type=antwoordpagina-nl`}
 							>
@@ -158,10 +182,13 @@ class OverviewPage extends React.Component {
 							</ReferenceLink>
 						</li>
 					</ul>
+					<h2>
+						{'Overzicht antwoordpagina’s'}
+					</h2>
 					<ArticleFilter
 						filter={filter}
-						handleSearch={this.handleSearchArticlesSubmit.bind(this)}
-						handleChange={this.handleSearchArticles.bind(this)}
+						handleChange={this.handleSearchArticles}
+						filterOptions={filterOptions}
 					/>
 					<SearchResult
 						results={articles.articles}

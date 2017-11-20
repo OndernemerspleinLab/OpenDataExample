@@ -1,3 +1,5 @@
+import curry from './curry';
+
 export const negate = fn => (...args) => !fn(...args);
 
 export const unexisty = value => value === null || typeof value === 'undefined';
@@ -61,3 +63,13 @@ export const debounce = (callback, delay) => {
 
 	return debounced;
 };
+
+export const getIn = curry(([key, ...restKeys], obj) => {
+	const normalizedObj = isObject(obj) ? obj : {};
+
+	if (restKeys.length === 0) {
+		return normalizedObj[key];
+	} else {
+		return getIn(restKeys, normalizedObj[key]);
+	}
+});
