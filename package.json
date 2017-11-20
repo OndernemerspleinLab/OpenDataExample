@@ -6,6 +6,8 @@
   "dependencies": {
     "babel-polyfill": "^6.23.0",
     "date-fns": "^1.29.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-react": "^7.4.0",
     "react": "^15.6.1",
     "react-addons-pure-render-mixin": "^15.6.0",
     "react-dom": "^15.6.1",

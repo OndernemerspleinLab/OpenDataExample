@@ -35,5 +35,31 @@ export const baseStyles = () => injectGlobal`
 		margin-top: 2em;
 		font-size: 1.1rem;
 	}
-	
+
+
+	/**** Sizing iFrames ****/
+	.chartContainer,
+	.videoContainer {
+		width: 100%;
+		height: 0;
+		position: relative;
+		display: block;
+	}
+	.chartContainer {
+		padding-bottom: 71.42857%;
+	}
+	.videoContainer {
+		padding-bottom: 56.25%;
+	}
+	iframe {
+		border: none;
+	}
+	.iframe {
+		display: block;
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+	}
 `;

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import type { ArticleModel } from '../models/article';
 import type { AuthorModel } from '../models/author';
 import { hemelblauw } from '../styles/colors';
+import { fixIframes } from './iFrame';
 
 const addHtmlKey = (htmlString: ?string = ''): {} => {
 	return { __html: htmlString };
@@ -44,7 +45,8 @@ const InfoText = (props: { author: AuthorModel }) => {
 
 const Article = (props: Props) => {
 	const article = props.article;
-	const articleBody = addHtmlKey(article.articleBody);
+	const fixedArticleBody = fixIframes(article.articleBody);
+	const articleBody = addHtmlKey(fixedArticleBody);
 
 	return (
 		<article>
