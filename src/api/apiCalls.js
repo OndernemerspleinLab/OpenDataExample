@@ -19,7 +19,7 @@ type PromiseSubsidies = Promise<SubsidiesModel>;
 type ArticleParams = {
 	offset?: number,
 	type?: ArticleType[],
-	sorts?: SortTokens[],
+	order?: SortTokens[],
 	search?: string,
 };
 
@@ -33,15 +33,15 @@ export const subsidiesEndpoint = `${apiBaseUrl}subsidies/`;
 export const getArticles = (props: {
 	offset: any,
 	search: string,
-	sorts: string,
+	order: string,
 }): PromiseArticles => {
-	const { offset = 0, search = '', sorts = '' } = props;
+	const { offset = 0, search = '', order = '' } = props;
 
 	const params: ArticleParams = {
 		offset,
 		type: ['antwoordpagina-nl'],
 		search,
-		sorts,
+		sorts: order,
 	};
 
 	return fetchJson(articlesEndpoint, {}, params);

@@ -5,6 +5,8 @@ import { unexisty } from '../helpers/functional';
 import { AnchorLink } from './link';
 import Pagination from './pagination';
 import { grijs } from '../styles/colors';
+import parse from 'date-fns/parse';
+import { formatDate } from '../helpers/date';
 
 const articlesPerPage = 20;
 const ArticleWrapper = styled.div``;
@@ -21,8 +23,27 @@ const Identifier = styled.span`
 const ArticleLink = styled(AnchorLink)`
 `;
 
+const StyledModified = styled.span`
+	font-size: 0.7rem;
+	margin-left: 0.5rem;
+	padding-top: 4px;
+	color: ${grijs.default};
+`;
+
+const Modified = ({ children }) => {
+	const date = parse(children);
+
+	const formattedDate = formatDate(date);
+
+	return (
+		<StyledModified>
+			{formattedDate}
+		</StyledModified>
+	);
+};
+
 const ArticleEntry = props => {
-	const { identifier, headLine } = props.article;
+	const { identifier, headLine, dateModified } = props.article;
 
 	return (
 		<ArticleEntryWrapper>
@@ -37,6 +58,9 @@ const ArticleEntry = props => {
 			>
 				{headLine}
 			</ArticleLink>
+			<Modified>
+				{dateModified}
+			</Modified>
 		</ArticleEntryWrapper>
 	);
 };

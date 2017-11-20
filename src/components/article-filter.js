@@ -6,6 +6,7 @@ import { Button } from './button';
 import { mediaObject, mediaObjectFigure } from '../styles/mediaObject';
 import { SearchInput } from './searchInput';
 import { SearchSelect } from './searchSelect';
+import { preventDefault } from '../helpers/formHelper';
 
 export type FilterObject = {
 	searchTerm: string,
@@ -41,15 +42,14 @@ const FilterWrapper = styled.div`
 
 export const ArticleFilter = (props: {
 	filter: FilterObject,
-	handleSubmit: Function,
 	handleChange: Function,
 	filterOptions: Object,
 }) => {
-	const { filter, handleSubmit, handleChange, filterOptions } = props;
+	const { filter, handleChange, filterOptions } = props;
 	const { sortFilter, directionFilter } = filterOptions;
 
 	return (
-		<Form onSubmit={handleSubmit}>
+		<Form onSubmit={preventDefault}>
 			<ArticleFilterWrapper>
 				<SearchWrapper>
 					<SearchInput
@@ -65,11 +65,6 @@ export const ArticleFilter = (props: {
 					</SearchButton>
 				</SearchWrapper>
 				<FilterWrapper>
-					<SearchSelect
-						name="sortField"
-						handleSelect={handleChange}
-						options={sortFilter}
-					/>
 					<SearchSelect
 						name="sortDirection"
 						handleSelect={handleChange}
