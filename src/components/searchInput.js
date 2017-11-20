@@ -26,7 +26,7 @@ export class SearchInput extends React.Component {
 		this.handleSearchDebounced = debounce(
 			() =>
 				this.props.handleSearch.apply(this, [
-					{ searchTerm: this.state.searchTerm },
+					{ searchTerm: this.state.searchTerm, offset: 0 },
 				]),
 			400
 		);

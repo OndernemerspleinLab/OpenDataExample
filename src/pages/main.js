@@ -25,7 +25,7 @@ class Main extends React.Component {
 			<MainBase>
 				<Switch>
 					<RouteWithProps
-						path={`${articlesUrl}:offset?`}
+						path={articlesUrl}
 						component={OverviewPage}
 						clickHandler={this.props.clickHandler}
 					/>

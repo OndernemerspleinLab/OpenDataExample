@@ -7,8 +7,8 @@ import Pagination from './pagination';
 import { grijs } from '../styles/colors';
 import parse from 'date-fns/parse';
 import { formatDate } from '../helpers/date';
+import { articlesPerPage } from '../api/apiCalls';
 
-const articlesPerPage = 20;
 const ArticleWrapper = styled.div``;
 
 const ArticleEntryWrapper = styled.div`display: flex;`;
@@ -66,7 +66,8 @@ const ArticleEntry = props => {
 };
 
 const ArticleList = props => {
-	const { articles, pagination } = props.articles;
+	const { offset, total, onPagination } = props;
+	const { articles } = props.articles;
 
 	if (unexisty(articles)) {
 		return null;
@@ -79,7 +80,12 @@ const ArticleList = props => {
 					<ArticleEntry key={key} article={article} pathname={props.pathname} />
 				);
 			})}
-			<Pagination pagination={pagination} limit={articlesPerPage} />
+			<Pagination
+				limit={articlesPerPage}
+				offset={offset}
+				total={total}
+				onPagination={onPagination}
+			/>
 		</ArticleWrapper>
 	);
 };

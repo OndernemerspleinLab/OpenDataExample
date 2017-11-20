@@ -48,20 +48,20 @@ class OverviewPage extends React.Component {
 				searchTerm: '',
 				sortField: 'modified',
 				sortDirection: 'desc',
+				offset: 0,
 			},
 		};
 		this.handleSearchArticles = this.handleSearchArticles.bind(this);
 	}
 
-	componentWillReceiveProps(newProps: any) {
-		if (newProps.match.params.offset !== this.props.match.params.offset) {
-			this.fetchArticles(newProps.match.params.offset);
-		}
-	}
-
 	componentDidMount() {
-		const offset = this.props.match.params.offset;
-		const articlesPromise = getArticles({ offset });
+		const { searchTerm, sortField, sortDirection, offset } = this.state.filter;
+		const order = getOrderQuery({ sort: sortField, direction: sortDirection });
+		const articlesPromise = getArticles({
+			offset,
+			search: searchTerm,
+			order,
+		});
 		const eventsPromise = getEvents();
 		const subsidiesPromise = getSubsidies();
 
@@ -88,7 +88,6 @@ class OverviewPage extends React.Component {
 
 		return getArticles({ offset, search: query, order }).then(result => {
 			this.setState({
-				...this.state,
 				articles: result,
 				loading: false,
 			});
@@ -101,6 +100,7 @@ class OverviewPage extends React.Component {
 			searchTerm = filter.searchTerm,
 			sortField = filter.sortField,
 			sortDirection = filter.sortDirection,
+			offset = filter.offset,
 		} = props;
 
 		this.setState({
@@ -108,12 +108,14 @@ class OverviewPage extends React.Component {
 				searchTerm,
 				sortField,
 				sortDirection,
+				offset,
 			},
 		});
 		this.fetchArticles({
 			query: searchTerm,
 			sort: sortField,
 			direction: sortDirection,
+			offset,
 		});
 	}
 
@@ -195,6 +197,9 @@ class OverviewPage extends React.Component {
 						: <ArticleList
 								articles={articles}
 								pathname={getObjectPath(this.props, ['location', 'pathname'])}
+								onPagination={this.handleSearchArticles}
+								offset={filter.offset}
+								total={articles.pagination.total}
 							/>}
 				</Column>
 				<Column size="third" sideColumn>

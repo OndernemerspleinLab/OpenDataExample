@@ -30,6 +30,9 @@ export const articlesEndpoint = `${apiBaseUrl}v1/articles/`;
 export const eventsEndpoint = `${apiBaseUrl}events/`;
 export const subsidiesEndpoint = `${apiBaseUrl}subsidies/`;
 
+// export const articlesPerPage = 20;
+export const articlesPerPage = 4;
+
 export const getArticles = (props: {
 	offset: any,
 	search: string,
@@ -39,6 +42,7 @@ export const getArticles = (props: {
 
 	const params: ArticleParams = {
 		offset,
+		limit: articlesPerPage,
 		type: ['antwoordpagina-nl'],
 		search,
 		order,

@@ -2,23 +2,15 @@
 
 import React from 'react';
 import styled from 'styled-components';
-
-import { articlesUrl } from '../pages/main';
-import { PaginationModel } from '../models/pagination';
+import { Button } from './button';
 import { unexisty } from '../helpers/functional';
-import { InternalButtonLink } from './button-link';
 
 const hasPreviousLink = (offset: number): boolean => offset > 0;
 const hasNextLink = (offset: number, limit: number, total: number): boolean =>
 	total - offset - limit > 0;
 
-const getPreviousUrl = (offset: number, limit: number) =>
-	`${articlesUrl}${offset - limit}`;
-const getNextUrl = (offset: number, limit: number) => {
-	const nextOffset = offset + limit;
-
-	return `${articlesUrl}${nextOffset}`;
-};
+const getPreviousOffset = (offset: number, limit: number) => offset - limit;
+const getNextOffset = (offset: number, limit: number) => offset + limit;
 
 const PaginationList = styled.div`
 	padding-left: 0;
@@ -28,35 +20,68 @@ const PaginationList = styled.div`
 	justify-content: space-between;
 `;
 
-const PreviousLink = (props: { offset: number, limit: number }) =>
+const PreviousLink = (props: {
+	offset: number,
+	limit: number,
+	onPagination: Function,
+}) =>
 	hasPreviousLink(props.offset)
-		? <InternalButtonLink to={getPreviousUrl(props.offset, props.limit)}>
-				{'Vorige'}
-			</InternalButtonLink>
+		? <Button
+				onClick={() =>
+					props.onPagination({
+						offset: getPreviousOffset(props.offset, props.limit),
+					})}
+			>
+				<span>
+					{'Vorige'}
+				</span>
+			</Button>
 		: null;
 
-const NextLink = (props: { offset: number, limit: number, total: number }) =>
+const NextLink = (props: {
+	offset: number,
+	limit: number,
+	total: number,
+	onPagination: Function,
+}) =>
 	hasNextLink(props.offset, props.limit, props.total)
-		? <InternalButtonLink to={getNextUrl(props.offset, props.limit)}>
-				{'Volgende'}
-			</InternalButtonLink>
+		? <Button
+				onClick={() =>
+					props.onPagination({
+						offset: getNextOffset(props.offset, props.limit),
+					})}
+			>
+				<span>
+					{'Volgende'}
+				</span>
+			</Button>
 		: null;
 
-const Pagination = (props: { pagination: PaginationModel, limit: number }) => {
-	const pagination: PaginationModel = props.pagination;
-	const limit = props.limit;
+const Pagination = (props: {
+	limit: number,
+	offset: number,
+	total: number,
+	onPagination: Function,
+}) => {
+	const { limit, offset, total, onPagination } = props;
 
-	if (unexisty(pagination) || unexisty(limit)) {
+	if (unexisty(total) || total <= 0) {
 		return null;
 	}
 
 	return (
 		<PaginationList>
-			<PreviousLink offset={pagination.offset} limit={limit} />
-			<NextLink
-				offset={pagination.offset}
+			<PreviousLink
+				offset={offset}
 				limit={limit}
-				total={pagination.total}
+				total={total}
+				onPagination={onPagination}
+			/>
+			<NextLink
+				offset={offset}
+				limit={limit}
+				total={total}
+				onPagination={onPagination}
 			/>
 		</PaginationList>
 	);
