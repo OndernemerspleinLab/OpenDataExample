@@ -9,7 +9,7 @@ import {
 	getEvents,
 } from '../api/apiCalls';
 import ArticleList from '../components/article-list';
-import { getObjectPath } from '../helpers/functional';
+import { getObjectPath, shallowEqual } from '../helpers/functional';
 import TotalString from '../components/total-string';
 import ReferenceLink from '../components/reference-link';
 import { LayoutContainer } from '../components/layoutContainer';
@@ -19,6 +19,7 @@ import { SectionLoading } from '../components/section-loading';
 import { ArticleFilter } from '../components/article-filter';
 import { SearchResult } from '../components/searchResult';
 import { formatDate } from '../helpers/date';
+import { updatePath, getFilterFromParams } from '../helpers/route';
 
 const getTotal = statePart => getObjectPath(statePart, ['pagination', 'total']);
 
@@ -30,8 +31,8 @@ const getOrderQuery = props => {
 
 const filterOptions = {
 	directionFilter: [
-		{ title: 'Aflopend', value: 'desc' },
-		{ title: 'Oplopend', value: 'asc' },
+		{ title: 'Publicatiedatum aflopend', value: 'desc' },
+		{ title: 'Publicatiedatum oplopend', value: 'asc' },
 	],
 };
 
@@ -44,18 +45,28 @@ class OverviewPage extends React.Component {
 			totalEvents: 0,
 			totalSubsidies: 0,
 			loading: true,
-			filter: {
-				searchTerm: '',
-				sortField: 'modified',
-				sortDirection: 'desc',
-				offset: 0,
-			},
 		};
 		this.handleSearchArticles = this.handleSearchArticles.bind(this);
 	}
 
+	componentWillReceiveProps(nextProps) {
+		const nextParams = getFilterFromParams(nextProps.match.params);
+		const lastParams = getFilterFromParams(this.props.match.params);
+
+		if (shallowEqual(lastParams, nextParams)) {
+			return;
+		}
+
+		this.fetchArticles(nextParams);
+	}
+
 	componentDidMount() {
-		const { searchTerm, sortField, sortDirection, offset } = this.state.filter;
+		const {
+			searchTerm,
+			sortField,
+			sortDirection,
+			offset,
+		} = getFilterFromParams(this.props.match.params);
 		const order = getOrderQuery({ sort: sortField, direction: sortDirection });
 		const articlesPromise = getArticles({
 			offset,
@@ -82,11 +93,13 @@ class OverviewPage extends React.Component {
 		});
 	}
 
-	fetchArticles({ offset, query, sort, direction }) {
-		this.setState({ loading: true });
-		const order = getOrderQuery({ sort, direction });
+	fetchArticles({ offset, searchTerm, sortField, sortDirection }) {
+		const order = getOrderQuery({ sort: sortField, direction: sortDirection });
+		this.setState({
+			loading: true,
+		});
 
-		return getArticles({ offset, search: query, order }).then(result => {
+		return getArticles({ offset, search: searchTerm, order }).then(result => {
 			this.setState({
 				articles: result,
 				loading: false,
@@ -95,26 +108,17 @@ class OverviewPage extends React.Component {
 	}
 
 	handleSearchArticles(props) {
-		const { filter } = this.state;
+		const filter = getFilterFromParams(this.props.match.params);
 		const {
 			searchTerm = filter.searchTerm,
-			sortField = filter.sortField,
 			sortDirection = filter.sortDirection,
 			offset = filter.offset,
 		} = props;
 
-		this.setState({
-			filter: {
-				searchTerm,
-				sortField,
-				sortDirection,
-				offset,
-			},
-		});
-		this.fetchArticles({
-			query: searchTerm,
-			sort: sortField,
-			direction: sortDirection,
+		updatePath({
+			history: this.props.history,
+			searchTerm,
+			sortDirection,
 			offset,
 		});
 	}
@@ -124,10 +128,11 @@ class OverviewPage extends React.Component {
 			totalArticles,
 			totalEvents,
 			totalSubsidies,
-			filter,
 			articles,
 			loading,
 		} = this.state;
+
+		const filter = getFilterFromParams(this.props.match.params);
 
 		return (
 			<LayoutContainer>

@@ -5,7 +5,7 @@ import { getArticle } from '../api/apiCalls';
 import { defaultArticle } from '../models/article';
 import Article from '../components/article';
 import ArticleBackLink from '../components/article-back-link';
-import { articlesUrl, articleUrl } from './main';
+import { articlesUrl, articleUrl } from '../helpers/route';
 import { getObjectPath, hasObjectPath } from '../helpers/functional';
 import { LayoutContainer } from '../components/layoutContainer';
 import { Column } from '../components/column';
@@ -29,7 +29,7 @@ const partToLink = (part: ArticlePart) => {
 
 	return {
 		text: part.headLine,
-		url: isExternal ? part.url : `${articleUrl}${part.identifier}`,
+		url: isExternal ? part.url : `${articleUrl}/${part.identifier}`,
 		isExternal,
 	};
 };

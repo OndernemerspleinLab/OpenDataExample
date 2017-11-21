@@ -1,7 +1,7 @@
 import React from 'react';
 
 export const SearchResult = props => {
-	const { results, searchTerm } = props;
+	const { results = [], searchTerm } = props;
 
 	if (!searchTerm) {
 		return null;

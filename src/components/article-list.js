@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { articleUrl } from '../pages/main';
+import { articleUrl } from '../helpers/route';
 import { unexisty } from '../helpers/functional';
 import { AnchorLink } from './link';
 import Pagination from './pagination';
@@ -52,7 +52,7 @@ const ArticleEntry = props => {
 			</Identifier>
 			<ArticleLink
 				to={{
-					pathname: `${articleUrl}${identifier}`,
+					pathname: `${articleUrl}/${identifier}`,
 					query: { backLink: props.pathname },
 				}}
 			>

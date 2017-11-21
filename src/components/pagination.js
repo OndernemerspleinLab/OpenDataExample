@@ -2,7 +2,7 @@
 
 import React from 'react';
 import styled from 'styled-components';
-import { Button } from './button';
+import { Button, InactiveButton } from './button';
 import { unexisty } from '../helpers/functional';
 
 const hasPreviousLink = (offset: number): boolean => offset > 0;
@@ -20,6 +20,9 @@ const PaginationList = styled.div`
 	justify-content: space-between;
 `;
 
+const previousLabel = 'Vorige';
+const nextLabel = 'Volgende';
+
 const PreviousLink = (props: {
 	offset: number,
 	limit: number,
@@ -33,10 +36,14 @@ const PreviousLink = (props: {
 					})}
 			>
 				<span>
-					{'Vorige'}
+					{previousLabel}
 				</span>
 			</Button>
-		: null;
+		: <InactiveButton>
+				<span>
+					{previousLabel}
+				</span>
+			</InactiveButton>;
 
 const NextLink = (props: {
 	offset: number,
@@ -52,10 +59,14 @@ const NextLink = (props: {
 					})}
 			>
 				<span>
-					{'Volgende'}
+					{nextLabel}
 				</span>
 			</Button>
-		: null;
+		: <InactiveButton>
+				<span>
+					{nextLabel}
+				</span>
+			</InactiveButton>;
 
 const Pagination = (props: {
 	limit: number,

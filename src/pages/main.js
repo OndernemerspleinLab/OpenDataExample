@@ -7,10 +7,12 @@ import OverviewPage from './overviewPage';
 import ArticlePage from './articlePage';
 import { Redirect } from 'react-router';
 import { mq } from '../styles/utils';
-import { RouteWithProps } from '../helpers/route';
-
-export const articleUrl = '/artikel/';
-export const articlesUrl = '/artikelen/';
+import {
+	RouteWithProps,
+	articlesUrl,
+	articleUrl,
+	createArticlesOverviewPathname,
+} from '../helpers/route';
 
 const MainBase = styled.main`
 	flex: 1 0 auto;
@@ -25,16 +27,19 @@ class Main extends React.Component {
 			<MainBase>
 				<Switch>
 					<RouteWithProps
-						path={articlesUrl}
+						path={`${articlesUrl}/:query?/publicatiedatum/:order/vanaf/:offset`}
 						component={OverviewPage}
+						exact={true}
 						clickHandler={this.props.clickHandler}
 					/>
 					<RouteWithProps
-						path={`${articleUrl}:id`}
+						path={`${articleUrl}/:id`}
 						component={ArticlePage}
 						clickHandler={this.props.clickHandler}
 					/>
-					<Route render={() => <Redirect to={articlesUrl} />} />
+					<Route
+						render={() => <Redirect to={createArticlesOverviewPathname({})} />}
+					/>
 				</Switch>
 			</MainBase>
 		);

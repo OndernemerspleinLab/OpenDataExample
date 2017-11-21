@@ -73,3 +73,14 @@ export const getIn = curry(([key, ...restKeys], obj) => {
 		return getIn(restKeys, normalizedObj[key]);
 	}
 });
+
+export const shallowEqual = (object1, object2) => {
+	const entries1 = Object.entries(object1);
+	const entries2 = Object.entries(object2);
+
+	if (entries1.length !== entries2.length) {
+		return false;
+	}
+
+	return entries1.every(([key, value]) => Object.is(object2[key], value));
+};
