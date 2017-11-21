@@ -154,7 +154,7 @@ class OverviewPage extends React.Component {
 						</li>
 						<li>
 							<TotalString total={totalArticles}>
-								{`Aantal antwoordpagina's`}
+								{`Aantal antwoordpagina’s`}
 							</TotalString>
 							<ReferenceLink
 								href={`${articlesEndpoint}?type=antwoordpagina-nl`}
