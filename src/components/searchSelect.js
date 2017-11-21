@@ -38,6 +38,10 @@ export class SearchSelect extends React.Component {
 				]),
 			100
 		);
+
+		this.setState({
+			selectedValue: this.props.value,
+		});
 	}
 
 	handleChange(event) {

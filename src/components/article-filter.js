@@ -69,6 +69,7 @@ export const ArticleFilter = (props: {
 						name="sortDirection"
 						handleSelect={handleChange}
 						options={directionFilter}
+						value={filter.sortDirection}
 					/>
 				</FilterWrapper>
 			</ArticleFilterWrapper>

@@ -30,6 +30,10 @@ export class SearchInput extends React.Component {
 				]),
 			400
 		);
+
+		this.setState({
+			searchTerm: this.props.value,
+		});
 	}
 
 	handleChange(event) {
