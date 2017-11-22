@@ -27,7 +27,7 @@ class Main extends React.Component {
 			<MainBase>
 				<Switch>
 					<RouteWithProps
-						path={`${articlesUrl}/:query?/publicatiedatum/:order/vanaf/:offset`}
+						path={`${articlesUrl}/:query?/wijzigingsdatum/:order/vanaf/:offset`}
 						component={OverviewPage}
 						exact={true}
 						clickHandler={this.props.clickHandler}

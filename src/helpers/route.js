@@ -44,7 +44,7 @@ export const createArticlesOverviewPathname = ({
 }) => {
 	const pathComponents = [
 		searchTerm,
-		'publicatiedatum',
+		'wijzigingsdatum',
 		getSortDirectionForUrl(sortDirection),
 		'vanaf',
 		offset || '0',

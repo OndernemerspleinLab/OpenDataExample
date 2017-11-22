@@ -31,8 +31,8 @@ const getOrderQuery = props => {
 
 const filterOptions = {
 	directionFilter: [
-		{ title: 'Publicatiedatum aflopend', value: 'desc' },
-		{ title: 'Publicatiedatum oplopend', value: 'asc' },
+		{ title: 'Wijzigingsdatum aflopend', value: 'desc' },
+		{ title: 'Wijzigingsdatum oplopend', value: 'asc' },
 	],
 };
 
