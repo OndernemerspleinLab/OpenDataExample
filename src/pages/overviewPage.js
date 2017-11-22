@@ -73,19 +73,21 @@ class OverviewPage extends React.Component {
 			search: searchTerm,
 			order,
 		});
+		const articlesCompletePromise = getArticles({});
 		const eventsPromise = getEvents();
 		const subsidiesPromise = getSubsidies();
 
 		Promise.all([
 			articlesPromise,
+			articlesCompletePromise,
 			eventsPromise,
 			subsidiesPromise,
 		]).then(result => {
-			const [articles, events, subsidies] = result;
+			const [articles, articlesComplete, events, subsidies] = result;
 
 			this.setState({
 				articles,
-				totalArticles: getTotal(articles),
+				totalArticles: getTotal(articlesComplete),
 				totalEvents: getTotal(events),
 				totalSubsidies: getTotal(subsidies),
 				loading: false,
