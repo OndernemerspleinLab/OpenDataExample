@@ -23,15 +23,13 @@ type ArticleParams = {
 	search?: string,
 };
 
-// const apiOrigin = 'https://opendata.ondernemersplein.nl';
-const apiOrigin = 'http://se94aoesb01:8012';
+const apiOrigin = 'https://opendata.ondernemersplein.nl';
 export const apiBaseUrl = `${apiOrigin}/api/`;
 export const articlesEndpoint = `${apiBaseUrl}v1/articles/`;
 export const eventsEndpoint = `${apiBaseUrl}events/`;
 export const subsidiesEndpoint = `${apiBaseUrl}subsidies/`;
 
-// export const articlesPerPage = 20;
-export const articlesPerPage = 4;
+export const articlesPerPage = 20;
 
 export const getArticles = (props: {
 	offset: any,
