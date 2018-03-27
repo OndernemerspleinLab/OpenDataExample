@@ -4,7 +4,7 @@ import React from 'react';
 import { isEmptyArray, unexisty } from '../helpers/functional';
 import { formatDate } from '../helpers/date';
 import TotalString from './total-string';
-import ReferenceLink from './reference-link';
+import { ReferenceLink } from './reference-link';
 import type {
 	SupplyListEntryModel,
 	SupplyListModel,
@@ -27,8 +27,11 @@ export const SupplyTypeList = (props: { supplyList: SupplyListModel }) => {
 					<TotalString total={entry.quantity}>
 						{entry.title}
 					</TotalString>
+					<ReferenceLink href={entry.referenceUrl}>
+						{`(${entry.referenceTitle})`}
+					</ReferenceLink>
 					<ReferenceLink href={entry.apiUrl}>
-						{entry.apiTitle}
+						{`(${entry.apiTitle})`}
 					</ReferenceLink>
 				</li>
 			)}

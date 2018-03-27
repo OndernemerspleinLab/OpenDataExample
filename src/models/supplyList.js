@@ -3,8 +3,8 @@ export type SupplyListEntryModel = {
 	quantity: number,
 	apiUrl: string,
 	apiTitle: string,
-	dopTitle: string,
-	dopUrl: string,
+	referenceTitle: string,
+	referenceUrl: string,
 };
 
 export type SupplyListModel = SupplyListEntryModel[];

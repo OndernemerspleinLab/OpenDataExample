@@ -7,6 +7,8 @@ import {
 	getSubsidies,
 	subsidiesEndpoint,
 	getEvents,
+	webinarEndpoint,
+	getWebinars,
 } from '../api/apiCalls';
 import ArticleList from '../components/article-list';
 import { getObjectPath, shallowEqual } from '../helpers/functional';
@@ -35,29 +37,42 @@ const filterOptions = {
 	],
 };
 
-const createSupplyList = ({ totalArticles, totalEvents, totalSubsidies }) => [
+const createSupplyList = ({
+	totalArticles,
+	totalEvents,
+	totalSubsidies,
+	totalWebinars,
+}) => [
 	{
 		title: `Aantal antwoordpagina’s`,
 		quantity: totalArticles,
 		apiUrl: `${articlesEndpoint}?type=antwoordpagina-nl`,
-		apiTitle: '(API Endpoint)',
+		apiTitle: 'API Endpoint',
 	},
 	{
 		title: 'Aantal evenementen',
 		quantity: totalEvents,
 		apiUrl: `${eventsEndpoint}`,
-		apiTitle: '(API Endpoint)',
-		referenceTitle: '(Bekijk op ondernemersplein.nl)',
+		apiTitle: 'API Endpoint',
+		referenceTitle: 'Bekijk op ondernemersplein.nl',
 		referenceUrl: 'https://www.ondernemersplein.nl/evenementen/',
 	},
 	{
 		title: 'Aantal subsidies',
 		quantity: totalSubsidies,
 		apiUrl: `${subsidiesEndpoint}`,
-		apiTitle: '(API Endpoint)',
-		referenceTitle: '(Bekijk op ondernemersplein.nl)',
+		apiTitle: 'API Endpoint',
+		referenceTitle: 'Bekijk op ondernemersplein.nl',
 		referenceUrl:
 			'https://www.ondernemersplein.nl/ondernemen/geldzaken/subsidies/',
+	},
+	{
+		title: 'Aantal webinars',
+		quantity: totalWebinars,
+		apiUrl: `${webinarEndpoint}`,
+		apiTitle: 'API Endpoint',
+		referenceTitle: 'Bekijk op ondernemersplein.nl',
+		referenceUrl: 'https://www.ondernemersplein.nl/onlineleren/',
 	},
 ];
 
@@ -101,19 +116,22 @@ class OverviewPage extends React.Component {
 		const articlesCompletePromise = getArticles({});
 		const eventsPromise = getEvents();
 		const subsidiesPromise = getSubsidies();
+		const webinarsPromise = getWebinars();
 
 		Promise.all([
 			articlesPromise,
 			articlesCompletePromise,
 			eventsPromise,
 			subsidiesPromise,
+			webinarsPromise,
 		]).then(result => {
-			const [articles, articlesComplete, events, subsidies] = result;
+			const [articles, articlesComplete, events, subsidies, webinars] = result;
 
 			const supplyList = createSupplyList({
 				totalArticles: getTotal(articlesComplete),
 				totalEvents: getTotal(events),
 				totalSubsidies: getTotal(subsidies),
+				totalWebinars: getTotal(webinars),
 			});
 
 			this.setState({
