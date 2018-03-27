@@ -7,11 +7,11 @@ import {
 	getSubsidies,
 	subsidiesEndpoint,
 	getEvents,
+	webinarEndpoint,
+	getWebinars,
 } from '../api/apiCalls';
 import ArticleList from '../components/article-list';
 import { getObjectPath, shallowEqual } from '../helpers/functional';
-import TotalString from '../components/total-string';
-import ReferenceLink from '../components/reference-link';
 import { LayoutContainer } from '../components/layoutContainer';
 import { Column } from '../components/column';
 import { ThemeSwitcher } from '../components/theme-switcher';
@@ -20,6 +20,7 @@ import { ArticleFilter } from '../components/article-filter';
 import { SearchResult } from '../components/searchResult';
 import { formatDate } from '../helpers/date';
 import { updatePath, getFilterFromParams } from '../helpers/route';
+import { SupplyTypeList } from '../components/supplyTypeList';
 
 const getTotal = statePart => getObjectPath(statePart, ['pagination', 'total']);
 
@@ -35,6 +36,45 @@ const filterOptions = {
 		{ title: 'Wijzigingsdatum oplopend', value: 'asc' },
 	],
 };
+
+const createSupplyList = ({
+	totalArticles,
+	totalEvents,
+	totalSubsidies,
+	totalWebinars,
+}) => [
+	{
+		title: `Aantal antwoordpagina’s`,
+		quantity: totalArticles,
+		apiUrl: `${articlesEndpoint}?type=antwoordpagina-nl`,
+		apiTitle: 'API Endpoint',
+	},
+	{
+		title: 'Aantal evenementen',
+		quantity: totalEvents,
+		apiUrl: `${eventsEndpoint}`,
+		apiTitle: 'API Endpoint',
+		referenceTitle: 'Bekijk op ondernemersplein.nl',
+		referenceUrl: 'https://www.ondernemersplein.nl/evenementen/',
+	},
+	{
+		title: 'Aantal subsidies',
+		quantity: totalSubsidies,
+		apiUrl: `${subsidiesEndpoint}`,
+		apiTitle: 'API Endpoint',
+		referenceTitle: 'Bekijk op ondernemersplein.nl',
+		referenceUrl:
+			'https://www.ondernemersplein.nl/ondernemen/geldzaken/subsidies/',
+	},
+	{
+		title: 'Aantal webinars',
+		quantity: totalWebinars,
+		apiUrl: `${webinarEndpoint}`,
+		apiTitle: 'API Endpoint',
+		referenceTitle: 'Bekijk op ondernemersplein.nl',
+		referenceUrl: 'https://www.ondernemersplein.nl/onlineleren/',
+	},
+];
 
 class OverviewPage extends React.Component {
 	constructor() {
@@ -76,20 +116,27 @@ class OverviewPage extends React.Component {
 		const articlesCompletePromise = getArticles({});
 		const eventsPromise = getEvents();
 		const subsidiesPromise = getSubsidies();
+		const webinarsPromise = getWebinars();
 
 		Promise.all([
 			articlesPromise,
 			articlesCompletePromise,
 			eventsPromise,
 			subsidiesPromise,
+			webinarsPromise,
 		]).then(result => {
-			const [articles, articlesComplete, events, subsidies] = result;
+			const [articles, articlesComplete, events, subsidies, webinars] = result;
 
-			this.setState({
-				articles,
+			const supplyList = createSupplyList({
 				totalArticles: getTotal(articlesComplete),
 				totalEvents: getTotal(events),
 				totalSubsidies: getTotal(subsidies),
+				totalWebinars: getTotal(webinars),
+			});
+
+			this.setState({
+				articles,
+				supplyList,
 				loading: false,
 			});
 		});
@@ -126,13 +173,7 @@ class OverviewPage extends React.Component {
 	}
 
 	render() {
-		const {
-			totalArticles,
-			totalEvents,
-			totalSubsidies,
-			articles,
-			loading,
-		} = this.state;
+		const { supplyList, articles, loading } = this.state;
 
 		const filter = getFilterFromParams(this.props.match.params);
 
@@ -150,41 +191,12 @@ class OverviewPage extends React.Component {
 							moment.`}
 						</strong>
 					</p>
+
+					<SupplyTypeList supplyList={supplyList} />
+
 					<ul>
 						<li>
 							{`Datum: ${formatDate(new Date())}`}
-						</li>
-						<li>
-							<TotalString total={totalArticles}>
-								{`Aantal antwoordpagina’s`}
-							</TotalString>
-							<ReferenceLink
-								href={`${articlesEndpoint}?type=antwoordpagina-nl`}
-							>
-								{'(API Endpoint)'}
-							</ReferenceLink>
-						</li>
-						<li>
-							<TotalString total={totalEvents}>
-								{'Aantal evenementen'}
-							</TotalString>
-							<ReferenceLink href="https://www.ondernemersplein.nl/evenementen/">
-								{'(Bekijk op ondernemersplein.nl)'}
-							</ReferenceLink>
-							<ReferenceLink href={eventsEndpoint}>
-								{'(API Endpoint)'}
-							</ReferenceLink>
-						</li>
-						<li>
-							<TotalString total={totalSubsidies}>
-								{'Aantal subsidies'}
-							</TotalString>
-							<ReferenceLink href="https://www.ondernemersplein.nl/ondernemen/geldzaken/subsidies/">
-								{'(Bekijk op ondernemersplein.nl)'}
-							</ReferenceLink>
-							<ReferenceLink href={subsidiesEndpoint}>
-								{'(API Endpoint)'}
-							</ReferenceLink>
 						</li>
 					</ul>
 					<h2>

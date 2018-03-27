@@ -28,6 +28,7 @@ export const apiBaseUrl = `${apiOrigin}/api/`;
 export const articlesEndpoint = `${apiBaseUrl}v1/articles/`;
 export const eventsEndpoint = `${apiBaseUrl}events/`;
 export const subsidiesEndpoint = `${apiBaseUrl}subsidies/`;
+export const webinarEndpoint = `${articlesEndpoint}?type=webinar-nl`;
 
 export const articlesPerPage = 20;
 
@@ -60,3 +61,5 @@ export const getSubsidies = (): PromiseSubsidies =>
 	fetchJson(subsidiesEndpoint);
 export const getSubsidie = (id: number): PromiseSubsidie =>
 	fetchJson(`${subsidiesEndpoint}${id}`);
+
+export const getWebinars = (): PromiseSubsidies => fetchJson(webinarEndpoint);
