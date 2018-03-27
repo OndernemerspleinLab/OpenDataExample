@@ -10,8 +10,6 @@ import {
 } from '../api/apiCalls';
 import ArticleList from '../components/article-list';
 import { getObjectPath, shallowEqual } from '../helpers/functional';
-import TotalString from '../components/total-string';
-import ReferenceLink from '../components/reference-link';
 import { LayoutContainer } from '../components/layoutContainer';
 import { Column } from '../components/column';
 import { ThemeSwitcher } from '../components/theme-switcher';
