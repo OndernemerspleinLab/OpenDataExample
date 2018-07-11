@@ -1,6 +1,10 @@
 version: '3'
 services:
   example-app:
-    image: registry.kvk.nl/so-ondernemersplein/open-data-example/dev:latest
-    ports:
-      - 80:80
+    image: ${CONTAINER_IMAGE:-dev}
+    build:
+      context: .
+      args:
+        - HTTP_PROXY
+        - HTTPS_PROXY
+        - NO_PROXY
