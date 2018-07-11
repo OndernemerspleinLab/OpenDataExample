@@ -1,0 +1,6 @@
+version: '3'
+services:
+  example-app:
+    image: registry.kvk.nl/so-ondernemersplein/open-data-example/dev:latest
+    ports:
+      - 80:80
