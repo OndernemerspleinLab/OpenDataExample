@@ -17,12 +17,12 @@ build:
     - docker tag $CONTAINER_IMAGE $CI_REGISTRY_IMAGE/$CONTAINER_IMAGE:$CI_PIPELINE_ID
     - docker push $CI_REGISTRY_IMAGE/$CONTAINER_IMAGE:$CI_PIPELINE_ID
     - docker rmi $CONTAINER_IMAGE
-only:
-  - master
+  only:
+    - master
 
 release-image-latest:
- stage: release
- script:
+  stage: release
+  script:
    - docker pull $CI_REGISTRY_IMAGE/$CONTAINER_IMAGE:$CI_PIPELINE_ID
    - docker tag $CI_REGISTRY_IMAGE/$CONTAINER_IMAGE:$CI_PIPELINE_ID $CONTAINER_RELEASE_IMAGE
    - docker push $CONTAINER_RELEASE_IMAGE
