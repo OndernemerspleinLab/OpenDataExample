@@ -5,7 +5,7 @@ stages:
 
 variables:
   CONTAINER_IMAGE: dev
-  CONTAINER_RELEASE_IMAGE: ${CI_REGISTRY_IMAGE}/${CONTAINER_NODEJS_IMAGE}:latest
+  CONTAINER_RELEASE_IMAGE: ${CI_REGISTRY_IMAGE}/${CONTAINER_IMAGE}:latest
 
 before_script:
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
@@ -24,10 +24,10 @@ release-image-latest:
  stage: release
  script:
    - docker pull $CI_REGISTRY_IMAGE/$CONTAINER_IMAGE:$CI_PIPELINE_ID
-   - docker tag $CI_REGISTRY_IMAGE/$CONTAINER_IMAGE:$CI_PIPELINE_ID $CONTAINER_WEB_RELEASE_IMAGE
+   - docker tag $CI_REGISTRY_IMAGE/$CONTAINER_IMAGE:$CI_PIPELINE_ID $CONTAINER_RELEASE_IMAGE
    - docker push $CONTAINER_RELEASE_IMAGE
    - docker rmi $CI_REGISTRY_IMAGE/$CONTAINER_IMAGE:$CI_PIPELINE_ID
-   - docker push $CONTAINER_RELEASE_IMAGE
+   - docker rmi $CONTAINER_RELEASE_IMAGE
 #  only:
 #    - develop
 
