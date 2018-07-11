@@ -14,6 +14,7 @@ import { ThemeSwitcher } from '../components/theme-switcher';
 import { SectionLoading } from '../components/section-loading';
 import { AsideLinkLists } from '../components/aside-linklists';
 import type { ArticleModel } from '../models/article';
+import { RelatedBar } from '../components/related-bar';
 import type { ArticlePart } from '../models/articlePart';
 
 const getBackLink = (props): string =>
@@ -34,7 +35,13 @@ const partToLink = (part: ArticlePart) => {
 	};
 };
 
-const hasPartToLinkLists = (hasPart: ArticlePart[]) => {
+const getRelatedAnwsers = (isPartOf: ArticlePart[]) =>
+	isPartOf.filter(
+		(part: ArticlePart) =>
+			part.partType === 'answer' && part.additionalType === 'antwoordpagina-nl'
+	);
+
+const getLinkLists = ({ hasPart, isPartOf }): ArticleModel => {
 	const wettenEnRegels = [];
 	const furtherInfo = [];
 
@@ -51,6 +58,10 @@ const hasPartToLinkLists = (hasPart: ArticlePart[]) => {
 	});
 
 	return [
+		{
+			text: `Gerelateerde antwoordpagina's`,
+			links: getRelatedAnwsers(isPartOf),
+		},
 		{
 			text: 'Zie ook',
 			links: furtherInfo,
@@ -97,7 +108,7 @@ class ArticlePage extends React.Component {
 			const stateObject = {
 				article: result,
 				loading: false,
-				linkLists: hasPartToLinkLists(result.hasPart),
+				linkLists: getLinkLists(result),
 			};
 
 			this.setState(stateObject);
@@ -109,6 +120,7 @@ class ArticlePage extends React.Component {
 		return (
 			<LayoutContainer>
 				<Column size="twoThird">
+					<RelatedBar relatedLinks={this.state.relatedLinks} />
 					<ArticleBackLink backLink={getBackLink(this.props)}>
 						{'Terug naar overzicht'}
 					</ArticleBackLink>
