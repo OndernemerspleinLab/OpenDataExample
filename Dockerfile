@@ -1,4 +1,4 @@
-FROM node:10 as dependencies
+FROM node:10 AS dependencies
 WORKDIR /opt/app/
 COPY package.json yarn.lock ./
 RUN yarn --silent
@@ -16,7 +16,6 @@ FROM files AS build
 RUN yarn run build
 
 FROM nginx:1.13.9-alpine
-COPY --from=builder /usr/src/app/build /usr/share/nginx/html
+COPY --from=build /opt/app/build /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
-

@@ -4,3 +4,7 @@ services:
     image: ${CONTAINER_IMAGE:-dev}
     build:
       context: .
+      args:
+        - HTTP_PROXY
+        - HTTPS_PROXY
+        - NO_PROXY
