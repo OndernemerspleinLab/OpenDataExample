@@ -36,12 +36,15 @@ const partToLink = (part: ArticlePart) => {
 };
 
 const getRelatedAnwsers = (isPartOf: ArticlePart[]) =>
-	isPartOf.filter(
-		(part: ArticlePart) =>
-			part.partType === 'answer' && part.additionalType === 'antwoordpagina-nl'
-	);
+	isPartOf
+		.filter(
+			(part: ArticlePart) =>
+				part.partType === 'answer' &&
+				part.additionalType === 'antwoordpagina-nl'
+		)
+		.map(partToLink);
 
-const getLinkLists = ({ hasPart, isPartOf }): ArticleModel => {
+const getLinkLists = (hasPart: ArticlePart[]) => {
 	const wettenEnRegels = [];
 	const furtherInfo = [];
 
@@ -58,10 +61,6 @@ const getLinkLists = ({ hasPart, isPartOf }): ArticleModel => {
 	});
 
 	return [
-		{
-			text: `Gerelateerde antwoordpagina's`,
-			links: getRelatedAnwsers(isPartOf),
-		},
 		{
 			text: 'Zie ook',
 			links: furtherInfo,
@@ -108,7 +107,8 @@ class ArticlePage extends React.Component {
 			const stateObject = {
 				article: result,
 				loading: false,
-				linkLists: getLinkLists(result),
+				linkLists: getLinkLists(result.hasPart),
+				relatedArticles: getRelatedAnwsers(result.isPartOf),
 			};
 
 			this.setState(stateObject);
@@ -120,7 +120,7 @@ class ArticlePage extends React.Component {
 		return (
 			<LayoutContainer>
 				<Column size="twoThird">
-					<RelatedBar relatedLinks={this.state.relatedLinks} />
+					<RelatedBar relatedArticles={this.state.relatedArticles} />
 					<ArticleBackLink backLink={getBackLink(this.props)}>
 						{'Terug naar overzicht'}
 					</ArticleBackLink>

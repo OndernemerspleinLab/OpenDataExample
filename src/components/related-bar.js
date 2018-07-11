@@ -8,7 +8,7 @@ import type { ArticlePart } from '../models/articlePart';
 
 const BaseRelatedBar = styled.div``;
 const InnerBar = styled.div``;
-const RelatedBarLabel = styled.h2``;
+const RelatedBarLabel = styled.div``;
 const RelatedBarList = styled.ul``;
 const RelatedBarListItem = styled.li``;
 const RelatedBarListItemLink = styled(InterfaceLink)``;
@@ -17,8 +17,8 @@ type Props = {
 	relatedLinks: ArticlePart[],
 };
 
-export const RelatedBar = ({ relatedLinks }): Props => {
-	if (unexisty(relatedLinks) || isEmptyArray(relatedLinks)) {
+export const RelatedBar = ({ relatedArticles }): Props => {
+	if (unexisty(relatedArticles) || isEmptyArray(relatedArticles)) {
 		return null;
 	}
 
@@ -29,13 +29,13 @@ export const RelatedBar = ({ relatedLinks }): Props => {
 					{'Gerelateerde artikelen'}
 				</RelatedBarLabel>
 				<RelatedBarList>
-					{relatedLinks.map((relatedLink, key) => {
-						const { headLine, url } = relatedLink;
+					{relatedArticles.map((relatedArticle, key) => {
+						const { text, url } = relatedArticle;
 
 						return (
 							<RelatedBarListItem key={key}>
 								<RelatedBarListItemLink url={url}>
-									{headLine}
+									{text}
 								</RelatedBarListItemLink>
 							</RelatedBarListItem>
 						);
