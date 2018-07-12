@@ -13,7 +13,7 @@ FROM files AS tests
 RUN CI=true yarn run test
 
 FROM files AS build
-RUN yarn run build
+RUN yarn run build:staging
 
 FROM nginx:1.13.9-alpine
 COPY --from=build /opt/app/build /usr/share/nginx/html
