@@ -36,5 +36,8 @@ deploy:
   script:
     - rancher-compose pull
     - rancher-compose up -d --pull --recreate --force-recreate --confirm-upgrade
+  environment:
+    name: staging
+    url: web.example.npo-dop-oapi.npo.kvk.nl
   only:
     - master
