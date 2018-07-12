@@ -3,15 +3,28 @@
 import React from 'react';
 import styled from 'styled-components';
 import { unexisty, isEmptyArray } from '../helpers/functional';
-import { InterfaceLink } from './interface-link';
 import type { ArticlePart } from '../models/articlePart';
+import { LinkList, ListItem } from './link-list';
+import { violet } from '../styles/colors';
+import { AnchorLink } from './link';
 
-const BaseRelatedBar = styled.div``;
+const BaseRelatedBar = styled.div`
+	background-color: ${violet.lightest};
+	padding: 1rem;
+	margin-bottom: 1.4rem;
+
+	${ListItem} {
+		padding: 0;
+	}
+
+	${AnchorLink} {
+		color: ${violet.dark};
+		fill: ${violet.dark};
+	}
+`;
 const InnerBar = styled.div``;
-const RelatedBarLabel = styled.div``;
-const RelatedBarList = styled.ul``;
-const RelatedBarListItem = styled.li``;
-const RelatedBarListItemLink = styled(InterfaceLink)``;
+const RelatedBarLabel = styled.h3`margin-top: 0;`;
+const RelatedBarList = styled(LinkList)``;
 
 type Props = {
 	relatedLinks: ArticlePart[],
@@ -26,21 +39,9 @@ export const RelatedBar = ({ relatedArticles }): Props => {
 		<BaseRelatedBar>
 			<InnerBar>
 				<RelatedBarLabel>
-					{'Gerelateerde artikelen'}
+					{`Gerelateerde antwoordpagina's`}
 				</RelatedBarLabel>
-				<RelatedBarList>
-					{relatedArticles.map((relatedArticle, key) => {
-						const { text, url } = relatedArticle;
-
-						return (
-							<RelatedBarListItem key={key}>
-								<RelatedBarListItemLink url={url}>
-									{text}
-								</RelatedBarListItemLink>
-							</RelatedBarListItem>
-						);
-					})}
-				</RelatedBarList>
+				<RelatedBarList links={relatedArticles} defaultIcon={'chevron-right'} />
 			</InnerBar>
 		</BaseRelatedBar>
 	);

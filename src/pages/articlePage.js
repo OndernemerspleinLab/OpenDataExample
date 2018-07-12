@@ -120,7 +120,6 @@ class ArticlePage extends React.Component {
 		return (
 			<LayoutContainer>
 				<Column size="twoThird">
-					<RelatedBar relatedArticles={this.state.relatedArticles} />
 					<ArticleBackLink backLink={getBackLink(this.props)}>
 						{'Terug naar overzicht'}
 					</ArticleBackLink>
@@ -129,6 +128,7 @@ class ArticlePage extends React.Component {
 						: <Article article={this.state.article} />}
 				</Column>
 				<Column size="third" sideColumn>
+					<RelatedBar relatedArticles={this.state.relatedArticles} />
 					<AsideLinkLists linkLists={this.state.linkLists} />
 					<ThemeSwitcher clickHandler={this.props.clickHandler} />
 					<ArticleLink to={this.state.article.url} className="">
