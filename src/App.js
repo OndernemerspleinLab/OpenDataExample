@@ -16,7 +16,7 @@ const Page = styled.div`
 	display: flex;
 	flex-direction: column;
 	padding-top: 1px;
-	margin: -1px auto 0 auto;
+	margin: -1px auto 2rem auto;
 	font-size: ${props => props.theme.fontScale};
 `;
 

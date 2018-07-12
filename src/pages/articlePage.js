@@ -14,6 +14,7 @@ import { ThemeSwitcher } from '../components/theme-switcher';
 import { SectionLoading } from '../components/section-loading';
 import { AsideLinkLists } from '../components/aside-linklists';
 import type { ArticleModel } from '../models/article';
+import { RelatedBar } from '../components/related-bar';
 import type { ArticlePart } from '../models/articlePart';
 
 const getBackLink = (props): string =>
@@ -34,7 +35,16 @@ const partToLink = (part: ArticlePart) => {
 	};
 };
 
-const hasPartToLinkLists = (hasPart: ArticlePart[]) => {
+const getRelatedAnwsers = (isPartOf: ArticlePart[]) =>
+	isPartOf
+		.filter(
+			(part: ArticlePart) =>
+				part.partType === 'answer' &&
+				part.additionalType === 'antwoordpagina-nl'
+		)
+		.map(partToLink);
+
+const getLinkLists = (hasPart: ArticlePart[]) => {
 	const wettenEnRegels = [];
 	const furtherInfo = [];
 
@@ -97,7 +107,8 @@ class ArticlePage extends React.Component {
 			const stateObject = {
 				article: result,
 				loading: false,
-				linkLists: hasPartToLinkLists(result.hasPart),
+				linkLists: getLinkLists(result.hasPart),
+				relatedArticles: getRelatedAnwsers(result.isPartOf),
 			};
 
 			this.setState(stateObject);
@@ -117,6 +128,7 @@ class ArticlePage extends React.Component {
 						: <Article article={this.state.article} />}
 				</Column>
 				<Column size="third" sideColumn>
+					<RelatedBar relatedArticles={this.state.relatedArticles} />
 					<AsideLinkLists linkLists={this.state.linkLists} />
 					<ThemeSwitcher clickHandler={this.props.clickHandler} />
 					<ArticleLink to={this.state.article.url} className="">

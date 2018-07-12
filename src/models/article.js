@@ -15,7 +15,7 @@ export type ArticleModel = {
 	headLine: string,
 	identifier: string,
 	inLanguage: string,
-	isPartOf: string[],
+	isPartOf: ArticlePart[],
 	keywords: string[],
 	publisher: AuthorModel[],
 	url: string,

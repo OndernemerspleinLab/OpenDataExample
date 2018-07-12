@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { unexisty } from '../helpers/functional';
 import { InterfaceLink } from './interface-link';
 
-const ListItem = styled.li`
+export const ListItem = styled.li`
 	break-inside: avoid;
 	list-style-type: none;
 	counter-increment: li;
@@ -14,7 +14,7 @@ const ListItem = styled.li`
 	padding: 0.3em 0;
 `;
 
-const ListLink = styled(InterfaceLink)`
+export const ListLink = styled(InterfaceLink)`
 	display: inline-flex;
 	align-items: flex-start;
 `;
