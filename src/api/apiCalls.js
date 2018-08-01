@@ -35,7 +35,7 @@ export const getArticles = (props: {
 	offset: any,
 	search: string,
 	order: string,
-	type: string[],
+	type: ArticleType[],
 }): PromiseArticles => {
 	const {
 		offset = 0,
