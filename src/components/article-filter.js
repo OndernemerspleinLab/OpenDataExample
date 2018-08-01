@@ -1,15 +1,18 @@
 // @flow
 
 import React from 'react';
+import type { ArticleType } from '../models/article-type';
 import styled from 'styled-components';
 import { Button } from './button';
 import { mediaObject, mediaObjectFigure } from '../styles/mediaObject';
 import { SearchInput } from './searchInput';
 import { SearchSelect } from './searchSelect';
+import { SearchTypes } from './searchTypes';
 import { preventDefault } from '../helpers/formHelper';
 
 export type FilterObject = {
 	searchTerm: string,
+	searchType: ArticleType,
 };
 
 export const searchInputId = 'searchInput';
@@ -40,12 +43,18 @@ const FilterWrapper = styled.div`
 	margin-bottom: 1rem;
 `;
 
+const TypeWrapper = styled.div`
+	flex: 0 1 100%;
+	margin-bottom: 1rem;
+`;
+
 export const ArticleFilter = (props: {
 	filter: FilterObject,
 	handleChange: Function,
 	filterOptions: Object,
+	articleTypes: Object[],
 }) => {
-	const { filter, handleChange, filterOptions } = props;
+	const { filter, handleChange, filterOptions, articleTypes } = props;
 	const { directionFilter } = filterOptions;
 
 	return (
@@ -72,6 +81,15 @@ export const ArticleFilter = (props: {
 						value={filter.sortDirection}
 					/>
 				</FilterWrapper>
+				<TypeWrapper>
+					<SearchTypes
+						name="searchType"
+						options={articleTypes}
+						defaultValue="antwoordpagina-nl"
+						checkedValue={filter.searchType}
+						handleCheck={handleChange}
+					/>
+				</TypeWrapper>
 			</ArticleFilterWrapper>
 		</Form>
 	);

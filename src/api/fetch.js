@@ -27,6 +27,12 @@ export const httpFetch = (
 	const parsedUrl = new URL(url);
 
 	Object.keys(queryParams).map(key => {
+		if (Array.isArray(queryParams[key]) && queryParams[key].length > 1) {
+			for (let param of queryParams[key]) {
+				parsedUrl.searchParams.append(key, param);
+			}
+			return true;
+		}
 		return parsedUrl.searchParams.append(key, queryParams[key]);
 	});
 

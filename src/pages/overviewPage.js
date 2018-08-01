@@ -37,6 +37,21 @@ const filterOptions = {
 	],
 };
 
+const articleTypes = [
+	{ value: 'artikel-nl', title: 'Artikelen' },
+	{ value: 'antwoordpagina-nl', title: "Antwoordpagina's" },
+	{ value: 'regel-nl', title: 'Regels' },
+	{ value: 'wetswijziging-nl', title: 'Wetswijzigingen' },
+	{ value: 'subsidie-nl', title: 'Subsidies' },
+	{ value: 'webinar-nl', title: 'Webinars' },
+];
+
+const getArticleTitle = types => {
+	return types
+		.map(value => articleTypes.find(obj => obj.value === value).title)
+		.join(' en ');
+};
+
 const createSupplyList = ({
 	totalArticles,
 	totalEvents,
@@ -105,6 +120,7 @@ class OverviewPage extends React.Component {
 			searchTerm,
 			sortField,
 			sortDirection,
+			searchType,
 			offset,
 		} = getFilterFromParams(this.props.match.params);
 		const order = getOrderQuery({ sort: sortField, direction: sortDirection });
@@ -112,6 +128,7 @@ class OverviewPage extends React.Component {
 			offset,
 			search: searchTerm,
 			order,
+			type: searchType,
 		});
 		const articlesCompletePromise = getArticles({});
 		const eventsPromise = getEvents();
@@ -142,13 +159,18 @@ class OverviewPage extends React.Component {
 		});
 	}
 
-	fetchArticles({ offset, searchTerm, sortField, sortDirection }) {
+	fetchArticles({ offset, searchTerm, searchType, sortField, sortDirection }) {
 		const order = getOrderQuery({ sort: sortField, direction: sortDirection });
 		this.setState({
 			loading: true,
 		});
 
-		return getArticles({ offset, search: searchTerm, order }).then(result => {
+		return getArticles({
+			offset,
+			search: searchTerm,
+			type: searchType,
+			order,
+		}).then(result => {
 			this.setState({
 				articles: result,
 				loading: false,
@@ -160,6 +182,7 @@ class OverviewPage extends React.Component {
 		const filter = getFilterFromParams(this.props.match.params);
 		const {
 			searchTerm = filter.searchTerm,
+			searchType = filter.searchType,
 			sortDirection = filter.sortDirection,
 			offset = filter.offset,
 		} = props;
@@ -167,6 +190,7 @@ class OverviewPage extends React.Component {
 		updatePath({
 			history: this.props.history,
 			searchTerm,
+			searchType,
 			sortDirection,
 			offset,
 		});
@@ -200,12 +224,13 @@ class OverviewPage extends React.Component {
 						</li>
 					</ul>
 					<h2>
-						{'Overzicht antwoordpagina’s'}
+						{`Overzicht ${getArticleTitle(filter.searchType)}`}
 					</h2>
 					<ArticleFilter
 						filter={filter}
 						handleChange={this.handleSearchArticles}
 						filterOptions={filterOptions}
+						articleTypes={articleTypes}
 					/>
 					<SearchResult
 						results={articles.articles}
