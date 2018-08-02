@@ -35,13 +35,19 @@ export const getArticles = (props: {
 	offset: any,
 	search: string,
 	order: string,
+	type: ArticleType[],
 }): PromiseArticles => {
-	const { offset = 0, search = '', order = '' } = props;
+	const {
+		offset = 0,
+		search = '',
+		order = '',
+		type = ['antwoordpagina-nl'],
+	} = props;
 
 	const params: ArticleParams = {
 		offset,
 		limit: articlesPerPage,
-		type: ['antwoordpagina-nl'],
+		type,
 		search,
 		order,
 	};

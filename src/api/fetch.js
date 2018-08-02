@@ -1,5 +1,7 @@
 // @flow
 
+import { isFilledArray } from '../helpers/functional';
+
 type PromiseResponse = Promise<Response>;
 
 const checkStatus = (response: Response): Response => {
@@ -19,6 +21,19 @@ const checkStatus = (response: Response): Response => {
 const addJsonHeaders = (options = {}) =>
 	Object.assign({ headers: { Accept: 'application/json' }, options });
 
+const appendParams = (parsedUrl, queryParams) => {
+	for (let key of Object.keys(queryParams)) {
+		if (isFilledArray(queryParams[key])) {
+			for (let param of queryParams[key]) {
+				parsedUrl.searchParams.append(key, param);
+			}
+		} else {
+			parsedUrl.searchParams.append(key, queryParams[key]);
+		}
+	}
+	return parsedUrl;
+};
+
 export const httpFetch = (
 	url: string,
 	options: RequestOptions,
@@ -26,9 +41,7 @@ export const httpFetch = (
 ): PromiseResponse => {
 	const parsedUrl = new URL(url);
 
-	Object.keys(queryParams).map(key => {
-		return parsedUrl.searchParams.append(key, queryParams[key]);
-	});
+	appendParams(parsedUrl, queryParams);
 
 	const responsePromise = fetch(parsedUrl.href, addJsonHeaders(options)).then(
 		checkStatus

@@ -39,11 +39,14 @@ export const articlesUrl = '/artikelen';
 
 export const createArticlesOverviewPathname = ({
 	searchTerm,
+	searchType,
 	sortDirection,
 	offset,
 }) => {
 	const pathComponents = [
 		searchTerm,
+		'soort',
+		searchType || 'antwoordpagina-nl',
 		'wijzigingsdatum',
 		getSortDirectionForUrl(sortDirection),
 		'vanaf',
@@ -55,9 +58,16 @@ export const createArticlesOverviewPathname = ({
 	return `${articlesUrl}/${pathComponents.join('/')}`;
 };
 
-export const updatePath = ({ history, searchTerm, sortDirection, offset }) => {
+export const updatePath = ({
+	history,
+	searchTerm,
+	searchType,
+	sortDirection,
+	offset,
+}) => {
 	const pathname = createArticlesOverviewPathname({
 		searchTerm,
+		searchType,
 		sortDirection,
 		offset,
 	});
@@ -78,10 +88,13 @@ export const getFilterFromParams = encodedParams => {
 
 	const sortDirection = getSortDirectionFromUrl(params.order);
 
+	const { type } = params;
+
 	return {
 		searchTerm: query,
 		sortField: 'modified',
 		sortDirection,
+		searchType: type.split('|'), // in the url multiple types are possible
 		offset,
 	};
 };
