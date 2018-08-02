@@ -54,7 +54,7 @@ export class SearchTypes extends React.Component {
 						checked={checkedValue === option.value}
 						onClick={this.handleChange}
 					>
-						{option.title}
+						{option.label}
 					</RadioButton>
 				)}
 			</div>

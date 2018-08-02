@@ -7,18 +7,25 @@ export const LabelRadio = styled.label`
 	margin-right: 1rem;
 `;
 
-export const RadioButton = props => {
+export const RadioButton = ({
+	id,
+	group,
+	value,
+	checked,
+	onClick,
+	children,
+}) => {
 	return (
 		<LabelRadio>
 			<InputRadio
 				type="radio"
-				id={props.id}
-				name={props.group}
-				value={props.value}
-				defaultChecked={props.checked}
-				onClick={props.onClick}
+				id={id}
+				name={group}
+				value={value}
+				defaultChecked={checked}
+				onClick={onClick}
 			/>
-			{props.children}
+			{children}
 		</LabelRadio>
 	);
 };

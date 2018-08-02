@@ -21,6 +21,7 @@ import { SearchResult } from '../components/searchResult';
 import { formatDate } from '../helpers/date';
 import { updatePath, getFilterFromParams } from '../helpers/route';
 import { SupplyTypeList } from '../components/supplyTypeList';
+import type { ArticleType } from '../models/article-type';
 
 const getTotal = statePart => getObjectPath(statePart, ['pagination', 'total']);
 
@@ -38,18 +39,19 @@ const filterOptions = {
 };
 
 const articleTypes = [
-	{ value: 'artikel-nl', title: 'Artikelen' },
-	{ value: 'antwoordpagina-nl', title: "Antwoordpagina's" },
-	{ value: 'regel-nl', title: 'Regels' },
-	{ value: 'wetswijziging-nl', title: 'Wetswijzigingen' },
-	{ value: 'subsidie-nl', title: 'Subsidies' },
-	{ value: 'webinar-nl', title: 'Webinars' },
+	{ value: 'artikel-nl', label: 'Artikelen' },
+	{ value: 'antwoordpagina-nl', label: "Antwoordpagina's" },
+	{ value: 'regel-nl', label: 'Regels' },
+	{ value: 'wetswijziging-nl', label: 'Wetswijzigingen' },
+	{ value: 'subsidie-nl', label: 'Subsidies' },
+	{ value: 'webinar-nl', label: 'Webinars' },
 ];
 
-const getArticleTitle = types => {
-	return types
-		.map(value => articleTypes.find(obj => obj.value === value).title)
-		.join(' en ');
+const getTitleFromArticleType = (target: ArticleType): string =>
+	articleTypes.find(type => type.value === target).label;
+
+const getArticleTitle = (types: ArticleType[]): string => {
+	return types.map(value => getTitleFromArticleType(value)).join(` en `);
 };
 
 const createSupplyList = ({
