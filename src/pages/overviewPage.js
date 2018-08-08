@@ -39,8 +39,8 @@ const filterOptions = {
 };
 
 const articleTypes = [
-	{ value: 'artikel-nl', label: 'Artikelen' },
 	{ value: 'antwoordpagina-nl', label: "Antwoordpagina's" },
+	{ value: 'artikel-nl', label: 'Artikelen' },
 	{ value: 'regel-nl', label: 'Regels' },
 	{ value: 'wetswijziging-nl', label: 'Wetswijzigingen' },
 	{ value: 'subsidie-nl', label: 'Subsidies' },
