@@ -1,6 +1,6 @@
 version: '2'
 services:
   web:
-    image: registry.kvk.nl/so-ondernemersplein/open-data-example/dev:latest
+    image: $IMAGE
     ports:
       - 80:80
