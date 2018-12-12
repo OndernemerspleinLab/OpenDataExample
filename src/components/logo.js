@@ -13,20 +13,27 @@ const LogoLink = styled(Link)`
 `;
 
 const LogoImg = styled(LogoIcon)`
-	max-width: 100%;
+	width: 80%;
 	display: block;
+	margin-left: 10%;
+	margin-right: 10%;
 
-	width: 7.8rem;
-	height: 2.6rem;
+	${mq('smallMedium')`
+		width: 84%;
+		margin-left: 8%;
+		margin-right: 8%;
+	`}; 
 
-	${mq('small')`
-		width: 9rem;
-		height: 3rem;
+	${mq('extraExtraLarge')`
+		width: 90%;
+		margin-left: 5%;
+		margin-right: 5%;
 	`};
 
-	${mq('large')`
-		width: 9.36rem;
-		height: 3.12rem;
+	${mq('extraExtraExtraLarge')`
+		width: auto;
+		margin-left: 0;
+		margin-right: 0;
 	`};
 `;
 

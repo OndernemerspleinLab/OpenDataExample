@@ -1,5 +1,5 @@
 export const hemelblauw = {
-	default: '#0077c0',
+	default: 'rgb(1, 104, 155)',
 	darkest: '#033054',
 	darker: '#2d526c',
 	dark: '#00619c',
