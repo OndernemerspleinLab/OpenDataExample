@@ -14,7 +14,7 @@ const BrandBar = styled.div`
 
 	${mq('small')`min-height: 2.94rem;`} ${mq('large')`min-height: 3rem;`} ${mq(
 			'extraExtraExtraLarge'
-		)`height: 3.8rem;`};
+		)`height: 2.75rem;`};
 `;
 
 export default BrandBar;
