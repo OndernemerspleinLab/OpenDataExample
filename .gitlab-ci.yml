@@ -61,7 +61,7 @@ build:
   stage: pre-deploy
   script:
     - cps env create.v1 --environment $RANCHER_ENVIRONMENT
-    - cps env set_users.v1 --owner dbxraa --owner dbxiaa --owner dbxemo --owner dbxhcu --owner dbxsmh --owner dbxrmr
+    - cps env set_users.v1 --owner dbxraa --owner dbxiaa --owner dbxemo --owner dbxhcu --owner dbxsmh --owner dbxrmr --owner dbxjwr
     - cps env add_hosts.v1 --upto 1
     - cps env enable_elk.v1
 
