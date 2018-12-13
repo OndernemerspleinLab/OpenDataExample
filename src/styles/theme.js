@@ -1,8 +1,8 @@
 import { grijs, hemelblauw, oranje, violet } from './colors';
 
 export const defaultTheme = {
-	maxWidth: '80rem',
-	fontScale: '1em',
+	maxWidth: '60rem',
+	fontScale: '0.85em',
 	primaryColor: hemelblauw.default,
 	brandBarBackground: hemelblauw.default,
 
@@ -21,8 +21,8 @@ export const defaultTheme = {
 };
 
 export const orangeTheme = {
-	maxWidth: '60rem',
-	fontScale: '0.85em',
+	maxWidth: '80rem',
+	fontScale: '1em',
 	primaryColor: oranje.default,
 	brandBarBackground: oranje.default,
 
