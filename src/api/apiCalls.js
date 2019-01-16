@@ -23,7 +23,9 @@ type ArticleParams = {
 	search?: string,
 };
 
-export const apiBaseUrl = `${process.env.REACT_APP_API_PATH}/api/`;
+const apiPath =
+	process.env.REACT_APP_API_PATH || 'https://opendata.ondernemersplein.nl';
+export const apiBaseUrl = `${apiPath}/api/`;
 export const articlesEndpoint = `${apiBaseUrl}v1/articles/`;
 export const eventsEndpoint = `${apiBaseUrl}events/`;
 export const subsidiesEndpoint = `${apiBaseUrl}subsidies/`;
