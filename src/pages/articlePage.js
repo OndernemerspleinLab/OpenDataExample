@@ -132,7 +132,7 @@ class ArticlePage extends React.Component {
 					<AsideLinkLists linkLists={this.state.linkLists} />
 					<ThemeSwitcher clickHandler={this.props.clickHandler} />
 					<ArticleLink to={this.state.article.url} className="">
-						{'Bekijk deze pagina op Ondernemersplein.nl'}
+						{'Bekijk deze pagina op Ondernemersplein'}
 					</ArticleLink>
 				</Column>
 			</LayoutContainer>
