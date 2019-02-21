@@ -71,25 +71,24 @@ const createSupplyList = ({
 		quantity: totalEvents,
 		apiUrl: `${eventsEndpoint}`,
 		apiTitle: 'API Endpoint',
-		referenceTitle: 'Bekijk op ondernemersplein.nl',
-		referenceUrl: 'https://www.ondernemersplein.nl/evenementen/',
+		referenceTitle: 'Bekijk op ondernemersplein.kvk.nl',
+		referenceUrl: 'https://ondernemersplein.kvk.nl/evenementen/',
 	},
 	{
 		title: 'Aantal subsidies',
 		quantity: totalSubsidies,
 		apiUrl: `${subsidiesEndpoint}`,
 		apiTitle: 'API Endpoint',
-		referenceTitle: 'Bekijk op ondernemersplein.nl',
-		referenceUrl:
-			'https://www.ondernemersplein.nl/ondernemen/geldzaken/subsidies/',
+		referenceTitle: 'Bekijk op ondernemersplein.kvk.nl',
+		referenceUrl: 'https://ondernemersplein.kvk.nl/subsidies-en-regelingen/',
 	},
 	{
 		title: 'Aantal webinars',
 		quantity: totalWebinars,
 		apiUrl: `${webinarEndpoint}`,
 		apiTitle: 'API Endpoint',
-		referenceTitle: 'Bekijk op ondernemersplein.nl',
-		referenceUrl: 'https://www.ondernemersplein.nl/onlineleren/',
+		referenceTitle: 'Bekijk op ondernemersplein.kvk.nl',
+		referenceUrl: 'https://ondernemersplein.kvk.nl/webinars-en-videos/',
 	},
 ];
 
@@ -211,7 +210,7 @@ class OverviewPage extends React.Component {
 					</h1>
 					<p>
 						<strong>
-							{`Ondernemersplein.nl bundelt informatie van de overheid voor
+							{`Ondernemersplein bundelt informatie van de overheid voor
 							ondernemers tot één logisch antwoord. Wij bieden deze informatie
 							ook aan via een open data API. Onderstaand het aanbod op dit
 							moment.`}
